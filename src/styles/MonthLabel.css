@@ -1,0 +1,13 @@
+@import './common/CalendarTile.css';
+
+#tile-div {
+    min-height: 25px;
+    padding-top: 7px;
+    display: flex;
+    justify-content: center;
+    background-color: #ff5200;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    margin-bottom: 2px;
+}

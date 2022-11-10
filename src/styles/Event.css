@@ -1,0 +1,13 @@
+.event-div {
+    position: absolute;
+    border-radius: 10px;
+    float: left;
+    height: 36px;
+    cursor: pointer;
+}
+
+.event-container {
+    position: relative;
+    margin-top: 4px;
+    height: 36px;
+}

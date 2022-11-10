@@ -1,0 +1,94 @@
+.month-div {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    gap: 2px;
+}
+
+.month-name {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.month-name > h3 {
+    text-align: center;
+    justify-content: center;
+    padding-top: 0px;
+    width: 130px;
+}
+
+.month-padding {
+    padding-left: 40px;
+}
+
+#calendar-button-left {
+    margin: 10px;
+    width: 40px;
+
+}
+
+#calendar-button-right {
+    margin: 10px;
+    width: 40px;
+}
+
+.calendar-box {
+    /* display: inline-flex; */
+    /* width: 100vw; */
+    /* height: 100vh; */
+    /* background-color: lightgreen; */
+    /* justify-content: center; */
+}
+
+.month-sidebar {
+    /* background-color: aqua ; */
+    height: 50vh;
+    width: 40px;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    float: left;
+    /* position: fixed; */
+}
+
+.calendar-faceimg {
+    width: 40px;
+    border-radius: 50%;
+}
+
+.calendar-firstimg {
+    margin-top: 20px;
+}
+
+#calendar-button-create {
+    margin: 10px;
+    width: 150px;
+    margin-left: 40px;
+    margin-right: auto; 
+}
+
+.title {
+    color: #ff5200;
+}
+
+.about-div {
+    margin: 30px;
+}
+
+.about-table {
+    border: 1px #ff5200 solid;
+    margin-top: 20px;
+    border-radius: 8px;
+    width: 200px;
+    display: flex;
+    padding: 5px;
+}
+
+.about-table > div {
+    width: 50%;
+}
+
+
+.about-table > div > div {
+    padding: 3px;
+}
