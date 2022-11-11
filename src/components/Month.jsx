@@ -3,6 +3,7 @@ import Day from "./Day";
 import MonthLabel from "./MonthLabel";
 import parse from 'html-react-parser'
 import "../styles/Month.css";
+import "../styles/Print.css";
 
 /**
  * What should be done better in project: (it has not been done so far due to lack of time)
@@ -43,10 +44,10 @@ export default function Month(props) {
   return (
     <div>
       <div className='month-name'>
-        <button id="calendar-button-create" onClick={props.toggleEventModal}>Create Event</button>
-        <button id="calendar-button-left" name="decrement" onClick={props.changeMonth}>{parse(lt)}</button>
+        <button id="calendar-button-create" className="printInvisible" onClick={props.toggleEventModal}>Create Event</button>
+        <button id="calendar-button-left" className="printInvisible" name="decrement" onClick={props.changeMonth}>{parse(lt)}</button>
         <h3>{props.month[2][1].format("MMMM")}</h3>
-        <button id="calendar-button-right" name="increment" onClick={props.changeMonth}>{parse(gt)}</button>
+        <button id="calendar-button-right" className="printInvisible" name="increment" onClick={props.changeMonth}>{parse(gt)}</button>
       </div>
       <div className="month-div month-padding">
         {props.month[0].map((day, i) => {
