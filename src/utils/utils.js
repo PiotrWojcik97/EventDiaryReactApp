@@ -51,12 +51,12 @@ export function calculateEventTable(data){
     let arr = _create_3_DimensionalArray()
     
     data.data.forEach(event => {
-        const startDate = new Date(event.start_date)
-        const endDate = new Date(event.end_date)
-        const user_id = event.user_id
-        const colorName = event.event_type
-        const eventID = event._id
-        
+        const startDate = new Date(event.start_time)
+        const endDate = new Date(event.end_time)
+        const user_id = event.user_id - 3 // TODO: hardcoded users (offset is 3 between real db id values compared to val in fronted app)
+        const colorName = event.type_id - 1 // TODO: types are starting from 1 in db
+        const eventID = event.id
+
         // handle multi-day event
         if(startDate.getDate() != endDate.getDate()) {
             for(let i=startDate.getDate(); i != endDate.getDate()+1; i++)

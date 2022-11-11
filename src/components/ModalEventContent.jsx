@@ -9,12 +9,12 @@ export default function ModalEventContent(props) {
     const [modalData, setModelData] = React.useState(getModalContent(props.eventID))
     const [isUpdateClicked, setIsUpdateClicked] = React.useState(false)
     const [formData, setFormData] = React.useState({
-        startDate: modalData.start_date,
-        endDate: modalData.end_date,
-        eventType: modalData.event_type,
+        startDate: modalData.start_time,
+        endDate: modalData.end_time,
+        eventType: modalData.type_id - 1, // TODO: hardcoded
         shortDescription: modalData.short_description,
         longDescription: modalData.long_description,
-        userID: modalData.user_id,
+        userID: modalData.user_id - 3, // TODO: hardcoded
         imageURL: modalData.img,
         name: modalData.name
     })
@@ -56,7 +56,7 @@ export default function ModalEventContent(props) {
 
     function getModalContent(eventID) {
         for(let idx=0; idx < exampleData.data.length; idx++) {
-            if(exampleData.data[idx]._id == eventID)
+            if(exampleData.data[idx].id == eventID)
             {
                 return exampleData.data[idx]
             }
@@ -66,7 +66,7 @@ export default function ModalEventContent(props) {
 
     function findArrayID() {
         for(let idx=0; idx < exampleData.data.length; idx++) {
-            if(exampleData.data[idx]._id == props.eventID)
+            if(exampleData.data[idx].id == props.eventID)
             {
                 return idx
             }
@@ -123,8 +123,8 @@ export default function ModalEventContent(props) {
     }
 
     function _areStartDateAndEndDateInCurrentMonth(currentMonth) {
-        const startMonth = new Date(formData.startDate).getMonth()
-        const endMonth = new Date(formData.endDate).getMonth()
+        const startMonth = new Date(formData.startDate).getMonth() + 1
+        const endMonth = new Date(formData.endDate).getMonth() + 1
         if(currentMonth == startMonth && currentMonth == endMonth)
             return true
         return false
@@ -133,19 +133,21 @@ export default function ModalEventContent(props) {
     function handleSubmit(event) {
         event.preventDefault()
         if(_validateForm()){
-            if(_areStartDateAndEndDateInCurrentMonth(globals.currentMonthIndex)) {
+
+        if(_areStartDateAndEndDateInCurrentMonth(globals.currentMonthIndex)) {
+
                 for(let i=0; i<exampleData.data.length; i++)
                 {
-                    if(exampleData.data[i]._id == props.eventID)
+                    if(exampleData.data[i].id == props.eventID)
                     {
-                        exampleData.data[i].user_id = formData.userID,
+                        exampleData.data[i].user_id = formData.userID + 3, //TODO: hardcoded
                         exampleData.data[i].name = formData.name,
-                        exampleData.data[i].start_date = formData.startDate,
-                        exampleData.data[i].end_date = formData.endDate,
+                        exampleData.data[i].start_time = formData.startDate,
+                        exampleData.data[i].end_time = formData.endDate,
                         exampleData.data[i].short_description = formData.shortDescription,
                         exampleData.data[i].long_description = formData.longDescription,
                         exampleData.data[i].img = "img url",
-                        exampleData.data[i].event_type = formData.eventType
+                        exampleData.data[i].type_id = formData.eventType + 1 //TODO: hardcoded
                         break
                     }
                 }
@@ -229,7 +231,7 @@ export default function ModalEventContent(props) {
                 // Event visualization 
                 <>
                     <div className="picture-description-holder">
-                        <img className="modal-picture" src={smallImagesArray[modalData.user_id]}/>
+                        <img className="modal-picture" src={smallImagesArray[modalData.user_id - 3]}/>
                         <div>
                             <h3>{modalData.name}</h3>
                             <span>{modalData.short_description}</span>
