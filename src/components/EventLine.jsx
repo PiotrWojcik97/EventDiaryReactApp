@@ -3,7 +3,6 @@ import Event from './Event';
 import "../styles/Event.css";
 
 export default function EventLine(props) {
-
   function isEventPresent() {
     if(props.eventArray && props.eventArray.length > 0)
       return true
@@ -11,6 +10,7 @@ export default function EventLine(props) {
   }
   
   let events = (<></>)
+
   if(isEventPresent())
   {
     events = props.eventArray.map( (eventItem, idx) => {

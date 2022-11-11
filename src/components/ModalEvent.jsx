@@ -4,7 +4,6 @@ import "../styles/Modal.css";
 import ColorBox from "./ColorBox";
 import UserBubble from "./UserBubble";
 import globals from "../utils/globals";
-import exampleData from "../utils/data";
 /**
  * Modal class representing Create Event Popup
  * @param {toggleModal} props 
@@ -112,7 +111,7 @@ export default function ModalEvent(props) {
                     img: "img url",
                     event_type: formData.eventType
                 }
-                exampleData.data.push(data)
+                globals.events.push(data)
                 // sent data to database with async here
             }
             else {

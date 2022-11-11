@@ -1,6 +1,5 @@
 import React from "react";
 import "../styles/Modal.css";
-import exampleData from "../utils/data";
 import ColorBox from "./ColorBox";
 import UserBubble from "./UserBubble";
 import { allowedColors, smallImagesArray } from "../utils/utils";
@@ -55,18 +54,18 @@ export default function ModalEventContent(props) {
     }
 
     function getModalContent(eventID) {
-        for(let idx=0; idx < exampleData.data.length; idx++) {
-            if(exampleData.data[idx].id == eventID)
+        for(let idx=0; idx < globals.events.length; idx++) {
+            if(globals.events[idx].id == eventID)
             {
-                return exampleData.data[idx]
+                return globals.events[idx]
             }
         }
         return undefined
     }
 
     function findArrayID() {
-        for(let idx=0; idx < exampleData.data.length; idx++) {
-            if(exampleData.data[idx].id == props.eventID)
+        for(let idx=0; idx < globals.events.length; idx++) {
+            if(globals.events[idx].id == props.eventID)
             {
                 return idx
             }
@@ -75,7 +74,7 @@ export default function ModalEventContent(props) {
     }
 
     function deleteEvent() {
-        exampleData.data.splice(findArrayID(), 1)
+        globals.events.splice(findArrayID(), 1)
         props.notifyEventUpdate()
         props.toggleModal()
     }
@@ -136,18 +135,18 @@ export default function ModalEventContent(props) {
 
         if(_areStartDateAndEndDateInCurrentMonth(globals.currentMonthIndex)) {
 
-                for(let i=0; i<exampleData.data.length; i++)
+                for(let i=0; i<globals.events.length; i++)
                 {
-                    if(exampleData.data[i].id == props.eventID)
+                    if(globals.events[i].id == props.eventID)
                     {
-                        exampleData.data[i].user_id = formData.userID + 3, //TODO: hardcoded
-                        exampleData.data[i].name = formData.name,
-                        exampleData.data[i].start_time = formData.startDate,
-                        exampleData.data[i].end_time = formData.endDate,
-                        exampleData.data[i].short_description = formData.shortDescription,
-                        exampleData.data[i].long_description = formData.longDescription,
-                        exampleData.data[i].img = "img url",
-                        exampleData.data[i].type_id = formData.eventType + 1 //TODO: hardcoded
+                        globals.events[i].user_id = formData.userID + 3, //TODO: hardcoded
+                        globals.events[i].name = formData.name,
+                        globals.events[i].start_time = formData.startDate,
+                        globals.events[i].end_time = formData.endDate,
+                        globals.events[i].short_description = formData.shortDescription,
+                        globals.events[i].long_description = formData.longDescription,
+                        globals.events[i].img = "img url",
+                        globals.events[i].type_id = formData.eventType + 1 //TODO: hardcoded
                         break
                     }
                 }

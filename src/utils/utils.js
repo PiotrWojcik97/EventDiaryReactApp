@@ -49,56 +49,56 @@ function _create_3_DimensionalArray() {
 // events are only monthly based (in case that event duration exceeds month it is divided to two, before entering database)
 export function calculateEventTable(data){
     let arr = _create_3_DimensionalArray()
+    if(data.length > 0) {
+        data.forEach(event => {
+            const startDate = new Date(event.start_time)
+            const endDate = new Date(event.end_time)
+            const user_id = event.user_id - 3 // TODO: hardcoded users (offset is 3 between real db id values compared to val in fronted app)
+            const colorName = event.type_id - 1 // TODO: types are starting from 1 in db
+            const eventID = event.id
     
-    data.data.forEach(event => {
-        const startDate = new Date(event.start_time)
-        const endDate = new Date(event.end_time)
-        const user_id = event.user_id - 3 // TODO: hardcoded users (offset is 3 between real db id values compared to val in fronted app)
-        const colorName = event.type_id - 1 // TODO: types are starting from 1 in db
-        const eventID = event.id
-
-        // handle multi-day event
-        if(startDate.getDate() != endDate.getDate()) {
-            for(let i=startDate.getDate(); i != endDate.getDate()+1; i++)
-            {
-                let start_time
-                let end_time
-                if(i == startDate.getDate())
+            // handle multi-day event
+            if(startDate.getDate() != endDate.getDate()) {
+                for(let i=startDate.getDate(); i != endDate.getDate()+1; i++)
                 {
-                    start_time = ((startDate.getHours()) / 24) + (startDate.getMinutes() / 1440)
-                    end_time = 23.999 / 24
+                    let start_time
+                    let end_time
+                    if(i == startDate.getDate())
+                    {
+                        start_time = ((startDate.getHours()) / 24) + (startDate.getMinutes() / 1440)
+                        end_time = 23.999 / 24
+                    }
+                    else if(i == endDate.getDate())
+                    {
+                        start_time = 0
+                        end_time = ((endDate.getHours()) / 24) + (endDate.getMinutes() / 1440)
+                    }
+                    else {
+                        start_time = 0
+                        end_time = 23.999 / 24
+                    }
+                    arr[i][user_id].push({
+                        startTime: start_time,
+                        endTime: end_time,
+                        colorID: colorName,
+                        eventID: eventID,
+                    })
                 }
-                else if(i == endDate.getDate())
-                {
-                    start_time = 0
-                    end_time = ((endDate.getHours()) / 24) + (endDate.getMinutes() / 1440)
-                }
-                else {
-                    start_time = 0
-                    end_time = 23.999 / 24
-                }
-                arr[i][user_id].push({
+            }
+            //handle event which duration does not exceed one day 
+            else {
+                let start_time = ((startDate.getHours()) / 24) + (startDate.getMinutes() / 1440)
+                let end_time = ((endDate.getHours()) / 24) + (endDate.getMinutes() / 1440)
+                
+                arr[startDate.getDate()][user_id].push({
                     startTime: start_time,
                     endTime: end_time,
                     colorID: colorName,
                     eventID: eventID,
                 })
             }
-        }
-        //handle event which duration does not exceed one day 
-        else {
-            let start_time = ((startDate.getHours()) / 24) + (startDate.getMinutes() / 1440)
-            let end_time = ((endDate.getHours()) / 24) + (endDate.getMinutes() / 1440)
-            
-            arr[startDate.getDate()][user_id].push({
-                startTime: start_time,
-                endTime: end_time,
-                colorID: colorName,
-                eventID: eventID,
-            })
-        }
-    })
-
+        })
+    }
     return arr
 }
 

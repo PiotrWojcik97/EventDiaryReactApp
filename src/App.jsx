@@ -5,7 +5,6 @@ import MainContent from './components/MainContent'
 import Modal from './components/Modal'
 import { getMonth, calculateEventTable } from "./utils/utils"
 import globals from './utils/globals'
-import exampleData from './utils/data'
 import ModalEvent from './components/ModalEvent'
 import ModalEventContent from './components/ModalEventContent'
 import api from './api/api'
@@ -15,12 +14,12 @@ export default function App() {
     const [modalEvent, setModalEvent] = React.useState(false);
     const [modalEventContent, setModalEventContent] = React.useState(false);
     const [currentMonth, setCurrentMonth] = React.useState(getMonth(globals.currentMonthIndex - 1))
-    const [eventArray, setEventArray] = React.useState(calculateEventTable(exampleData))
+    const [eventArray, setEventArray] = React.useState(calculateEventTable(globals.events))
     const [isAboutActive, setAboutActive] = React.useState(false)
     const [users, setUsers] = React.useState([])
     const [events, setEvents] = React.useState([])
     const [types, setTypes] = React.useState([])
-    
+
     React.useEffect( () => {
         async function getData() {
             const res = await api.getUsers()
@@ -33,6 +32,7 @@ export default function App() {
         async function getData() {
             const res = await api.getEvents()
             setEvents(res)
+            notifyEventUpdate()
         }
         getData()
     }, [])
@@ -46,7 +46,7 @@ export default function App() {
     }, [])
 
     function notifyEventUpdate() {
-        setEventArray(calculateEventTable(exampleData))
+        setEventArray(calculateEventTable(globals.events))
     }
     function changeMonth(event) {
         const {name} = event.target

@@ -4,7 +4,6 @@ import { allowedColors } from '../utils/utils';
 import globals from '../utils/globals';
 
 export default function Event(props) {
-
     function isDurationEventSmall() {
         if(props.endPos - props.startPos < 0.05)
             return true

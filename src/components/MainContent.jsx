@@ -2,7 +2,6 @@ import React from "react"
 import Month from "./Month"
 
 export default function MainContent(props) {
-
     return (
         <main>
             {
