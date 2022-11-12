@@ -102,6 +102,18 @@ class Api {
             return undefined
         }
     }
+
+    changePassword = async(data) => {
+        try {
+            let response = await this.backend.post(`/api/v1/user/change_password.php`, data)
+            console.log(response)
+            return response.data.res
+        }
+        catch(e) {
+            console.log(e)
+            return undefined
+        }
+    }
 }
 
 const api = new Api()

@@ -91,6 +91,23 @@ form {
     margin-top: 0px;
 }
 
+.align-modals-div {
+    margin-top: 62px;
+}
+
+#login-input {
+    margin-top: 0px;
+}
+
+#modal-login {
+    height: 380px;
+}
+
+#change-password{
+    margin-top: 0px;
+    width: 160px;
+}
+
 textarea {
     border: 1px solid gray;
     border-radius: 4px;
