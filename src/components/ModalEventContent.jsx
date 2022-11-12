@@ -252,10 +252,11 @@ export default function ModalEventContent(props) {
                         </div>
                     </div>
                     <span>{modalData.long_description}</span>
-                    <div className="modal-buttons">
+                    {props.isUserLoggedIn && <div className="modal-buttons">
                         <button onClick={deleteEvent}>Delete</button>
                         <button id="modal-update-button" onClick={() => {setIsUpdateClicked(true)}}>Update</button>
                     </div>
+                    }
                 </>
             }
                 <button className="close-modal" onClick={props.toggleModal}>X</button>

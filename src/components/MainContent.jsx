@@ -111,6 +111,7 @@ export default function MainContent(props) {
                         changeMonth={props.changeMonth}
                         eventArray={props.eventArray}
                         toggleModalEventContent={props.toggleModalEventContent}
+                        isUserLoggedIn={props.isUserLoggedIn}
                     />
             }
         </main>

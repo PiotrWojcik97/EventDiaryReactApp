@@ -16,6 +16,7 @@ export default function App() {
     const [currentMonth, setCurrentMonth] = React.useState(getMonth(globals.currentMonthIndex - 1))
     const [eventArray, setEventArray] = React.useState(calculateEventTable(globals.events))
     const [isAboutActive, setAboutActive] = React.useState(false)
+    const [isUserLoggedIn, setIsUserLoggedIn] = React.useState(false)
     const [users, setUsers] = React.useState([])
     const [events, setEvents] = React.useState([])
     const [types, setTypes] = React.useState([])
@@ -83,10 +84,15 @@ export default function App() {
                     toggleEventModal={toggleEventModal}
                     toggleModalEventContent={toggleModalEventContent}
                     isAboutActive={isAboutActive}
+                    isUserLoggedIn={isUserLoggedIn}
                     />
-                {modal && <Modal toggleModal={toggleModal} />}
+                {modal && <Modal toggleModal={toggleModal} setIsUserLoggedIn={setIsUserLoggedIn} />}
                 {modalEvent && <ModalEvent toggleModal={toggleEventModal} notifyEventUpdate={notifyEventUpdate} />}
-                {modalEventContent && <ModalEventContent toggleModal={toggleModalEventContent} eventID={globals.currentEventClicked} notifyEventUpdate={notifyEventUpdate} />}
+                {modalEventContent && <ModalEventContent 
+                    toggleModal={toggleModalEventContent}
+                    eventID={globals.currentEventClicked}
+                    isUserLoggedIn={isUserLoggedIn}
+                    notifyEventUpdate={notifyEventUpdate} />}
             </div>
     )
 }

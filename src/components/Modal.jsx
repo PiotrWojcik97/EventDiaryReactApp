@@ -37,6 +37,7 @@ export default function Modal(props) {
             }
             else {
                 // change avatar
+                props.setIsUserLoggedIn(true)
                 props.toggleModal()
             }
         }
@@ -86,7 +87,7 @@ export default function Modal(props) {
                     <h4 className="warning-h4">{warningText}</h4>
                     <div>
                         <button id="button-login" className="form-button">Change</button>
-                        <button id="button-login" onClick={() => {
+                        <button id="button-cancel" onClick={() => {
                             setIsChangePasswordClicked(false)
                             setWarningText("")
                         }} className="form-button">Cancel</button>
