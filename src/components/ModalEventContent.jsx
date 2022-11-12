@@ -4,6 +4,8 @@ import ColorBox from "./ColorBox";
 import UserBubble from "./UserBubble";
 import { allowedColors, smallImagesArray } from "../utils/utils";
 import globals from "../utils/globals";
+import api from "../api/api";
+
 export default function ModalEventContent(props) {
     const [modalData, setModelData] = React.useState(getModalContent(props.eventID))
     const [isUpdateClicked, setIsUpdateClicked] = React.useState(false)
@@ -75,6 +77,7 @@ export default function ModalEventContent(props) {
 
     function deleteEvent() {
         globals.events.splice(findArrayID(), 1)
+        api.deleteEvent(props.eventID)
         props.notifyEventUpdate()
         props.toggleModal()
     }
@@ -145,12 +148,24 @@ export default function ModalEventContent(props) {
                         globals.events[i].end_time = formData.endDate,
                         globals.events[i].short_description = formData.shortDescription,
                         globals.events[i].long_description = formData.longDescription,
-                        globals.events[i].img = "img url",
+                        globals.events[i].image = "img url",
                         globals.events[i].type_id = formData.eventType + 1 //TODO: hardcoded
                         break
                     }
                 }
-                // sent data to database with async here
+                let data = {
+                    id: props.eventID,
+                    user_id: formData.userID + 3,
+                    name: formData.name,
+                    start_time: formData.startDate,
+                    end_time: formData.endDate,
+                    short_description: formData.shortDescription,
+                    long_description: formData.longDescription,
+                    image: "img url",
+                    image_description: "img url",
+                    type_id: formData.eventType + 1,
+                }
+                api.updateEvent(data)
             }
             else {
                 // divide algorithm from utils here

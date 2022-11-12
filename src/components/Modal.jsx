@@ -1,5 +1,6 @@
 import React from "react";
 import "../styles/Modal.css";
+import api from "../api/api";
 
 /**
  * Modal class representing LogIn Popup
@@ -8,12 +9,19 @@ import "../styles/Modal.css";
  */
 export default function Modal(props) {
     const [formData, setFormData] = React.useState({
-        login: "",
+        username: "",
         password: ""
     })
+    const [warningText, setWarningText] = React.useState("")
 
-    function handleSubmit(event) {
+    async function handleSubmit(event) {
         event.preventDefault()
+        console.log(formData)
+        let res = await api.login(formData)
+        console.log(res)
+        if( res != "OK"){
+            setWarningText("Wrong credentials")
+        }
     }
 
     function handleFormChange(event) {
@@ -35,18 +43,20 @@ export default function Modal(props) {
                         placeholder="Login"
                         className="form-input"
                         onChange={handleFormChange}
-                        name="login"
-                        value={formData.login}
+                        name="username"
+                        value={formData.username}
                     />
                     <input 
                         type="password" 
                         placeholder="Password"
                         className="form-input"
+                        id="form-password"
                         name="password"
                         onChange={handleFormChange}
                         value={formData.password}
                     />
-                    <button className="form-button">Log in</button>
+                    <h4 className="warning-h4">{warningText}</h4>
+                    <button id="button-login" className="form-button">Log in</button>
                 </form>
                 
                 <button className="close-modal" onClick={props.toggleModal}>X</button>

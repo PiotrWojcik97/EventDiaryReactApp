@@ -58,8 +58,50 @@ class Api {
         }
     }
 
+    createEvent = async(data) => {
+        try {
+            let response = await this.backend.post('/api/v1/event/create_single.php', data)
+            console.log(response)
+        }
+        catch(e) {
+            console.log(e)
+            return undefined
+        }
+    }
 
-    
+    deleteEvent = async(id) => {
+        try {
+            let response = await this.backend.delete(`/api/v1/event/delete.php?id=${id}`)
+            console.log(response)
+        }
+        catch(e) {
+            console.log(e)
+            return undefined
+        }
+    }
+
+    updateEvent = async(data) => {
+        try {
+            let response = await this.backend.post(`/api/v1/event/update.php`, data)
+            console.log(response)
+        }
+        catch(e) {
+            console.log(e)
+            return undefined
+        }
+    }
+
+    login = async(data) => {
+        try {
+            let response = await this.backend.post(`/api/v1/user/login.php`, data)
+            console.log(response)
+            return response.data.res
+        }
+        catch(e) {
+            console.log(e)
+            return undefined
+        }
+    }
 }
 
 const api = new Api()

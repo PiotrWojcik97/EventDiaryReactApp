@@ -79,8 +79,16 @@ form {
     font-family: 'Inter', sans-serif;
 }
 
+#form-password {
+    margin-bottom: 0px;
+}
+
 .form-button {
     margin: 15px;
+}
+
+#button-login {
+    margin-top: 0px;
 }
 
 textarea {

@@ -4,6 +4,7 @@ import "../styles/Modal.css";
 import ColorBox from "./ColorBox";
 import UserBubble from "./UserBubble";
 import globals from "../utils/globals";
+import api from "../api/api";
 /**
  * Modal class representing Create Event Popup
  * @param {toggleModal} props 
@@ -101,18 +102,18 @@ export default function ModalEvent(props) {
         if(_validateForm()){
             if(_areStartDateAndEndDateInCurrentMonth(globals.currentMonthIndex)) {
                 const data = {
-                    _id: 0,
-                    user_id: formData.userID,
+                    user_id: formData.userID + 3,
                     name: formData.name,
-                    start_date: formData.startDate,
-                    end_date: formData.endDate,
+                    start_time: formData.startDate,
+                    end_time: formData.endDate,
                     short_description: formData.shortDescription,
                     long_description: formData.longDescription,
-                    img: "img url",
-                    event_type: formData.eventType
+                    image: "img url",
+                    image_description: "img url",
+                    type_id: formData.eventType + 1
                 }
                 globals.events.push(data)
-                // sent data to database with async here
+                api.createEvent(data)
             }
             else {
                 // divide algorithm from utils here
