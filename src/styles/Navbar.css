@@ -23,8 +23,17 @@ nav {
 .nav--button {
     margin-right: 3px;
     margin-left: 20px;
+    width: 80px;
 }
 
 .clickable-item {
     cursor: pointer;
+}
+
+.navbar-faceimg {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+    margin-right: 10px;
 }

@@ -76,7 +76,7 @@ export default function App() {
 
     return (
             <div className="App">
-                <Navbar toggleModal={toggleModal} setAboutActive={setAboutActive}/>
+                <Navbar toggleModal={toggleModal} setAboutActive={setAboutActive} isUserLoggedIn={isUserLoggedIn}/>
                 <MainContent
                     currentMonth={currentMonth}
                     changeMonth={changeMonth}
@@ -86,7 +86,7 @@ export default function App() {
                     isAboutActive={isAboutActive}
                     isUserLoggedIn={isUserLoggedIn}
                     />
-                {modal && <Modal toggleModal={toggleModal} setIsUserLoggedIn={setIsUserLoggedIn} />}
+                {modal && <Modal toggleModal={toggleModal} setIsUserLoggedIn={setIsUserLoggedIn} isUserLoggedIn={isUserLoggedIn}/>}
                 {modalEvent && <ModalEvent toggleModal={toggleEventModal} notifyEventUpdate={notifyEventUpdate} />}
                 {modalEventContent && <ModalEventContent 
                     toggleModal={toggleModalEventContent}

@@ -34,6 +34,7 @@ export default function Modal(props) {
         else {
             if(isChangePasswordClicked) {
                 setIsChangePasswordClicked(false)
+                setWarningText("")
             }
             else {
                 // change avatar
@@ -94,37 +95,54 @@ export default function Modal(props) {
                     </div>
                 </form>
                 :
-                <form onSubmit={handleSubmit}>
-                    <h2>Sign in</h2>
-                    <input
-                        type="text"
-                        placeholder="Login"
-                        className="form-input"
-                        onChange={handleFormChange}
-                        name="username"
-                        value={formData.username}
-                    />
-                    <input 
-                        type="password" 
-                        placeholder="Password"
-                        className="form-input"
-                        id="form-password"
-                        name="password"
-                        onChange={handleFormChange}
-                        value={formData.password}
-                    />
-                    <h4 className="warning-h4">{warningText}</h4>
-                    <div className="align-modals-div">
-                        <button id="button-login" className="form-button">Log in</button>
-                        <button 
-                            id="change-password" 
-                            onClick={() => {
-                                setIsChangePasswordClicked(true)
-                                setWarningText("")
-                                }} 
-                            className="form-button">Change password</button>
-                    </div>
-                </form>
+                    props.isUserLoggedIn
+                    ?
+                    <form>
+                        <h2>Log out</h2>
+                        <img className="modal-picture-user" src="dog_square_big.jpg"/>
+                        <div className="div-margin">
+                            <button id="button-login" className="form-button">Log out</button>
+                            <button
+                                id="change-password" 
+                                onClick={() => {
+                                    setIsChangePasswordClicked(true)
+                                    setWarningText("")
+                                    }} 
+                                className="form-button">Change password</button>
+                        </div>
+                    </form>
+                    :
+                    <form onSubmit={handleSubmit}>
+                        <h2>Sign in</h2>
+                        <input
+                            type="text"
+                            placeholder="Login"
+                            className="form-input"
+                            onChange={handleFormChange}
+                            name="username"
+                            value={formData.username}
+                        />
+                        <input 
+                            type="password" 
+                            placeholder="Password"
+                            className="form-input"
+                            id="form-password"
+                            name="password"
+                            onChange={handleFormChange}
+                            value={formData.password}
+                        />
+                        <h4 className="warning-h4">{warningText}</h4>
+                        <div className="align-modals-div">
+                            <button id="button-login" className="form-button">Log in</button>
+                            <button 
+                                id="change-password" 
+                                onClick={() => {
+                                    setIsChangePasswordClicked(true)
+                                    setWarningText("")
+                                    }} 
+                                className="form-button">Change password</button>
+                        </div>
+                    </form>
                 }
                 <button className="close-modal" onClick={props.toggleModal}>X</button>
             </div>  
