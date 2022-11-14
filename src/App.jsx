@@ -3,7 +3,7 @@ import './styles/App.css'
 import Navbar from './components/Navbar'
 import MainContent from './components/MainContent'
 import Modal from './components/Modal'
-import { getMonth, calculateEventTable } from "./utils/utils"
+import { getMonth, calculateEventTable, getYear } from "./utils/utils"
 import globals from './utils/globals'
 import ModalEvent from './components/ModalEvent'
 import ModalEventContent from './components/ModalEventContent'
@@ -20,6 +20,10 @@ export default function App() {
     const [users, setUsers] = React.useState([])
     const [events, setEvents] = React.useState([])
     const [types, setTypes] = React.useState([])
+
+    // init year in globals
+    if(globals.currentYear == 0)
+        globals.currentYear = getYear()
 
     React.useEffect( () => {
         async function getData() {
@@ -56,6 +60,7 @@ export default function App() {
         else
             globals.currentMonthIndex++
 
+            globals.currentYear = getYear(globals.currentMonthIndex - 1)
         setCurrentMonth(getMonth(globals.currentMonthIndex - 1))
     }
 

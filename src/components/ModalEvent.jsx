@@ -5,6 +5,7 @@ import ColorBox from "./ColorBox";
 import UserBubble from "./UserBubble";
 import globals from "../utils/globals";
 import api from "../api/api";
+import dayjs from "dayjs";
 /**
  * Modal class representing Create Event Popup
  * @param {toggleModal} props 
@@ -116,7 +117,77 @@ export default function ModalEvent(props) {
                 api.createEvent(data)
             }
             else {
-                // divide algorithm from utils here
+                console.log("divide algorithm")
+                const start_time = dayjs(new Date(formData.startDate))
+                const end_time = dayjs(new Date(formData.endDate))
+                let start_year = start_time.year()
+                let end_year = end_time.year()
+                let start_month = start_time.month()
+                let end_month = end_time.month()
+                
+                while(!((start_year == end_year) && (start_month == end_month + 1)))
+                {
+                    let curr = dayjs(new Date(start_year, start_month))
+                    if(curr.year() == start_time.year() && curr.month() == start_time.month())
+                    {
+                        let month_end = dayjs(new Date(start_year, start_month + 1, 0, 23, 59, 59)).format('YYYY-MM-DDTHH:mm:ss')
+                        const data = {
+                            user_id: formData.userID + 3,
+                            name: formData.name,
+                            start_time: formData.startDate,
+                            end_time: month_end,
+                            short_description: formData.shortDescription,
+                            long_description: formData.longDescription,
+                            image: "img url",
+                            image_description: "img url",
+                            type_id: formData.eventType + 1
+                        }
+                        // api push
+                    }
+                    else if (curr.year() == end_year && curr.month() == end_month)
+                    {
+                        let month_start = dayjs(new Date(start_year, start_month, 1, 0, 0, 1)).format('YYYY-MM-DDTHH:mm:ss')
+                        const data = {
+                            user_id: formData.userID + 3,
+                            name: formData.name,
+                            start_time: month_start,
+                            end_time: formData.endDate,
+                            short_description: formData.shortDescription,
+                            long_description: formData.longDescription,
+                            image: "img url",
+                            image_description: "img url",
+                            type_id: formData.eventType + 1
+                        }
+                        // api push
+                        break;
+                    }
+                    else {
+                        let month_end = dayjs(new Date(start_year, start_month + 1, 0, 23, 59, 59)).format('YYYY-MM-DDTHH:mm:ss')
+                        let month_start = dayjs(new Date(start_year, start_month, 1, 0, 0, 1)).format('YYYY-MM-DDTHH:mm:ss')
+                        const data = {
+                            user_id: formData.userID + 3,
+                            name: formData.name,
+                            start_time: month_start,
+                            end_time: month_end,
+                            short_description: formData.shortDescription,
+                            long_description: formData.longDescription,
+                            image: "img url",
+                            image_description: "img url",
+                            type_id: formData.eventType + 1
+                        }
+                        // api push
+                    }
+                    
+                    if(start_month == 11)
+                    {
+                        start_year++
+                        start_month = 0
+                    }
+                    else
+                    {
+                        start_month++
+                    }
+                }
             }
             props.notifyEventUpdate()
         }

@@ -46,7 +46,7 @@ export default function Month(props) {
       <div className='month-name'>
         {props.isUserLoggedIn ? <button id="calendar-button-create" className="printInvisible" onClick={props.toggleEventModal}>Create Event</button> : <div id="calendar-button-create"></div>}
         <button id="calendar-button-left" className="printInvisible" name="decrement" onClick={props.changeMonth}>{parse(lt)}</button>
-        <h3>{props.month[2][1].format("MMMM")}</h3>
+        <h3>{props.month[2][1].format("MMMM YYYY")}</h3>
         <button id="calendar-button-right" className="printInvisible" name="increment" onClick={props.changeMonth}>{parse(gt)}</button>
       </div>
       <div className="month-div month-padding">

@@ -25,6 +25,14 @@ export function getMonth(month = dayjs().month() ){
     return daysMatrix
 }
 
+export function getYear(month = dayjs().month()) {
+    const currentYear = dayjs().year()
+
+    let date = dayjs(new Date(currentYear, month))
+    console.log(date.year())
+    return date.year()
+}
+
 /**
  * 
  * @returns arr[CALENDAR_DAYS][USERS_NUMBER][EVENTS PER USER IN THAT DAY]
