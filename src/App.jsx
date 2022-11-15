@@ -35,7 +35,10 @@ export default function App() {
 
     React.useEffect( () => {
         async function getData() {
-            const res = await api.getEvents()
+            const res = await api.getEvents({
+                month: globals.currentMonthIndex,
+                year: globals.currentYear
+            })
             setEvents(res)
             notifyEventUpdate()
         }
