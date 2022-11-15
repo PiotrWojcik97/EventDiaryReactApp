@@ -5,7 +5,7 @@ export function getMonth(month = dayjs().month() ){
     const POLISH_CALENDAR_FORMAT = 0
     const USA_CALENDAR_FORMAT = 1
     const WEEK_DAYS = 7
-    const MONTH_WEEKS = 5
+    const MONTH_WEEKS = 6
     
     const currentYear = dayjs().year()
 
@@ -29,7 +29,6 @@ export function getYear(month = dayjs().month()) {
     const currentYear = dayjs().year()
 
     let date = dayjs(new Date(currentYear, month))
-    console.log(date.year())
     return date.year()
 }
 
@@ -57,7 +56,7 @@ function _create_3_DimensionalArray() {
 // events are only monthly based (in case that event duration exceeds month it is divided to two, before entering database)
 export function calculateEventTable(data){
     let arr = _create_3_DimensionalArray()
-    if(data.length > 0) {
+    if( data != undefined && data.length > 0) {
         data.forEach(event => {
             const startDate = new Date(event.start_time)
             const endDate = new Date(event.end_time)
@@ -108,6 +107,20 @@ export function calculateEventTable(data){
         })
     }
     return arr
+}
+
+// monthIndex can be -1 and if so it is not equal day.format("MM")
+export function checkMonthIndex(monthIndex)
+{
+    if(monthIndex % 12 > 0) {
+        return monthIndex % 12
+    }
+    else if(monthIndex % 12 == 0) {
+        return 12
+    }
+    else {
+        return 12 + (monthIndex % 12)
+    }
 }
 
 export const allowedColors = [

@@ -1,5 +1,5 @@
 import React from "react";
-import { allowedColors, smallImagesArray } from "../utils/utils";
+import { allowedColors, smallImagesArray, checkMonthIndex } from "../utils/utils";
 import "../styles/Modal.css";
 import ColorBox from "./ColorBox";
 import UserBubble from "./UserBubble";
@@ -90,10 +90,10 @@ export default function ModalEvent(props) {
         return true
     }
 
-    function _areStartDateAndEndDateInCurrentMonth(currentMonth) {
-        const startMonth = new Date(formData.startDate).getMonth() + 1
-        const endMonth = new Date(formData.endDate).getMonth() + 1
-        if(currentMonth == startMonth && currentMonth == endMonth)
+    function _areStartDateAndEndDateInTheSameMonth() {
+        const startMonth = new Date(formData.startDate).getMonth()
+        const endMonth = new Date(formData.endDate).getMonth()
+        if(startMonth == endMonth)
             return true
         return false
     }
@@ -101,23 +101,30 @@ export default function ModalEvent(props) {
     function handleSubmit(event) {
         event.preventDefault()
         if(_validateForm()){
-            if(_areStartDateAndEndDateInCurrentMonth(globals.currentMonthIndex)) {
-                const data = {
-                    user_id: formData.userID + 3,
-                    name: formData.name,
-                    start_time: formData.startDate,
-                    end_time: formData.endDate,
-                    short_description: formData.shortDescription,
-                    long_description: formData.longDescription,
-                    image: "img url",
-                    image_description: "img url",
-                    type_id: formData.eventType + 1
+            
+            let data = {
+                user_id: formData.userID + 3,
+                name: formData.name,
+                start_time: formData.startDate,
+                end_time: formData.endDate,
+                short_description: formData.shortDescription,
+                long_description: formData.longDescription,
+                image: "img url",
+                image_description: "img url",
+                type_id: formData.eventType + 1
+            }
+
+            api.createEvent(data)
+
+            if(_areStartDateAndEndDateInTheSameMonth()) {
+                // check if recent data should be updated in case data is in current month
+                const startMonth = new Date(formData.startDate).getMonth()
+
+                if((checkMonthIndex(globals.currentMonthIndex) - 1) == startMonth){
+                    globals.events.push(data)
                 }
-                globals.events.push(data)
-                api.createEvent(data)
             }
             else {
-                console.log("divide algorithm")
                 const start_time = dayjs(new Date(formData.startDate))
                 const end_time = dayjs(new Date(formData.endDate))
                 let start_year = start_time.year()
@@ -130,52 +137,33 @@ export default function ModalEvent(props) {
                     let curr = dayjs(new Date(start_year, start_month))
                     if(curr.year() == start_time.year() && curr.month() == start_time.month())
                     {
-                        let month_end = dayjs(new Date(start_year, start_month + 1, 0, 23, 59, 59)).format('YYYY-MM-DDTHH:mm:ss')
-                        const data = {
-                            user_id: formData.userID + 3,
-                            name: formData.name,
-                            start_time: formData.startDate,
-                            end_time: month_end,
-                            short_description: formData.shortDescription,
-                            long_description: formData.longDescription,
-                            image: "img url",
-                            image_description: "img url",
-                            type_id: formData.eventType + 1
+                        if(curr.year() == globals.currentYear && curr.month() == checkMonthIndex(globals.currentMonthIndex) - 1){
+                            let month_end = dayjs(new Date(start_year, start_month + 1, 0, 23, 59, 59)).format('YYYY-MM-DDTHH:mm:ss')
+                            data.start_time = formData.startDate
+                            data.end_time = month_end
+                            globals.events.push(data)
+                            break;
                         }
-                        // api push
                     }
                     else if (curr.year() == end_year && curr.month() == end_month)
                     {
-                        let month_start = dayjs(new Date(start_year, start_month, 1, 0, 0, 1)).format('YYYY-MM-DDTHH:mm:ss')
-                        const data = {
-                            user_id: formData.userID + 3,
-                            name: formData.name,
-                            start_time: month_start,
-                            end_time: formData.endDate,
-                            short_description: formData.shortDescription,
-                            long_description: formData.longDescription,
-                            image: "img url",
-                            image_description: "img url",
-                            type_id: formData.eventType + 1
+                        if(curr.year() == globals.currentYear && curr.month() == checkMonthIndex(globals.currentMonthIndex) - 1) {
+                            let month_start = dayjs(new Date(start_year, start_month, 1, 0, 0, 1)).format('YYYY-MM-DDTHH:mm:ss')
+                            data.start_time = month_start
+                            data.end_time = formData.endDate
+                            globals.events.push(data)
+                            break;
                         }
-                        // api push
-                        break;
                     }
                     else {
-                        let month_end = dayjs(new Date(start_year, start_month + 1, 0, 23, 59, 59)).format('YYYY-MM-DDTHH:mm:ss')
-                        let month_start = dayjs(new Date(start_year, start_month, 1, 0, 0, 1)).format('YYYY-MM-DDTHH:mm:ss')
-                        const data = {
-                            user_id: formData.userID + 3,
-                            name: formData.name,
-                            start_time: month_start,
-                            end_time: month_end,
-                            short_description: formData.shortDescription,
-                            long_description: formData.longDescription,
-                            image: "img url",
-                            image_description: "img url",
-                            type_id: formData.eventType + 1
+                        if(curr.year() == globals.currentYear && curr.month() == checkMonthIndex(globals.currentMonthIndex) - 1) {
+                            let month_end = dayjs(new Date(start_year, start_month + 1, 0, 23, 59, 59)).format('YYYY-MM-DDTHH:mm:ss')
+                            let month_start = dayjs(new Date(start_year, start_month, 1, 0, 0, 1)).format('YYYY-MM-DDTHH:mm:ss')
+                            data.start_time = month_start
+                            data.end_time = month_end
+                            globals.events.push(data)
+                            break;
                         }
-                        // api push
                     }
                     
                     if(start_month == 11)
@@ -190,6 +178,7 @@ export default function ModalEvent(props) {
                 }
             }
             props.notifyEventUpdate()
+            props.toggleModal()
         }
     }
 

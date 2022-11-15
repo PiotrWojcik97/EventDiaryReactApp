@@ -46,9 +46,10 @@ class Api {
     getEvents = async(data) => {
         try {
             let retVal
-            await this.backend.get('/api/v1/event/read_month.php', data).then( res => {
+            await this.backend.post('/api/v1/event/read_month.php', data).then( res => {
                 retVal = res.data.data
             })
+            console.log("globals write")
             globals.events = retVal
             return retVal
         }

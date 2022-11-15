@@ -10,7 +10,6 @@ export default function EventLine(props) {
   }
   
   let events = (<></>)
-
   if(isEventPresent())
   {
     events = props.eventArray.map( (eventItem, idx) => {

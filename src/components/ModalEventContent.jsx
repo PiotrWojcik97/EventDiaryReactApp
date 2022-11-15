@@ -2,9 +2,10 @@ import React from "react";
 import "../styles/Modal.css";
 import ColorBox from "./ColorBox";
 import UserBubble from "./UserBubble";
-import { allowedColors, smallImagesArray } from "../utils/utils";
+import { allowedColors, smallImagesArray, checkMonthIndex } from "../utils/utils";
 import globals from "../utils/globals";
 import api from "../api/api";
+import dayjs from "dayjs";
 
 export default function ModalEventContent(props) {
     const [modalData, setModelData] = React.useState(getModalContent(props.eventID))
@@ -124,10 +125,10 @@ export default function ModalEventContent(props) {
         return true
     }
 
-    function _areStartDateAndEndDateInCurrentMonth(currentMonth) {
-        const startMonth = new Date(formData.startDate).getMonth() + 1
-        const endMonth = new Date(formData.endDate).getMonth() + 1
-        if(currentMonth == startMonth && currentMonth == endMonth)
+    function _areStartDateAndEndDateInTheSameMonth() {
+        const startMonth = new Date(formData.startDate).getMonth()
+        const endMonth = new Date(formData.endDate).getMonth()
+        if(startMonth == endMonth)
             return true
         return false
     }
@@ -135,40 +136,84 @@ export default function ModalEventContent(props) {
     function handleSubmit(event) {
         event.preventDefault()
         if(_validateForm()){
+            
+            let data = {
+                id: props.eventID,
+                user_id: formData.userID + 3,
+                name: formData.name,
+                start_time: formData.startDate,
+                end_time: formData.endDate,
+                short_description: formData.shortDescription,
+                long_description: formData.longDescription,
+                image: "img url",
+                image_description: "img url",
+                type_id: formData.eventType + 1
+            }
 
-        if(_areStartDateAndEndDateInCurrentMonth(globals.currentMonthIndex)) {
+            globals.events.splice(findArrayID(), 1)
 
-                for(let i=0; i<globals.events.length; i++)
-                {
-                    if(globals.events[i].id == props.eventID)
-                    {
-                        globals.events[i].user_id = formData.userID + 3, //TODO: hardcoded
-                        globals.events[i].name = formData.name,
-                        globals.events[i].start_time = formData.startDate,
-                        globals.events[i].end_time = formData.endDate,
-                        globals.events[i].short_description = formData.shortDescription,
-                        globals.events[i].long_description = formData.longDescription,
-                        globals.events[i].image = "img url",
-                        globals.events[i].type_id = formData.eventType + 1 //TODO: hardcoded
-                        break
-                    }
+            api.updateEvent(data)
+
+            if(_areStartDateAndEndDateInTheSameMonth()) {
+                // check if recent data should be updated in case data is in current month
+                const startMonth = new Date(formData.startDate).getMonth()
+
+                if((checkMonthIndex(globals.currentMonthIndex) - 1) == startMonth){
+                    globals.events.push(data)
                 }
-                let data = {
-                    id: props.eventID,
-                    user_id: formData.userID + 3,
-                    name: formData.name,
-                    start_time: formData.startDate,
-                    end_time: formData.endDate,
-                    short_description: formData.shortDescription,
-                    long_description: formData.longDescription,
-                    image: "img url",
-                    image_description: "img url",
-                    type_id: formData.eventType + 1,
-                }
-                api.updateEvent(data)
             }
             else {
-                // divide algorithm from utils here
+                const start_time = dayjs(new Date(formData.startDate))
+                const end_time = dayjs(new Date(formData.endDate))
+                let start_year = start_time.year()
+                let end_year = end_time.year()
+                let start_month = start_time.month()
+                let end_month = end_time.month()
+                
+                while(!((start_year == end_year) && (start_month == end_month + 1)))
+                {
+                    let curr = dayjs(new Date(start_year, start_month))
+                    if(curr.year() == start_time.year() && curr.month() == start_time.month())
+                    {
+                        if(curr.year() == globals.currentYear && curr.month() == checkMonthIndex(globals.currentMonthIndex) - 1){
+                            let month_end = dayjs(new Date(start_year, start_month + 1, 0, 23, 59, 59)).format('YYYY-MM-DDTHH:mm:ss')
+                            data.start_time = formData.startDate
+                            data.end_time = month_end
+                            globals.events.push(data)
+                            break;
+                        }
+                    }
+                    else if (curr.year() == end_year && curr.month() == end_month)
+                    {
+                        if(curr.year() == globals.currentYear && curr.month() == checkMonthIndex(globals.currentMonthIndex) - 1) {
+                            let month_start = dayjs(new Date(start_year, start_month, 1, 0, 0, 1)).format('YYYY-MM-DDTHH:mm:ss')
+                            data.start_time = month_start
+                            data.end_time = formData.endDate
+                            globals.events.push(data)
+                            break;
+                        }
+                    }
+                    else {
+                        if(curr.year() == globals.currentYear && curr.month() == checkMonthIndex(globals.currentMonthIndex) - 1) {
+                            let month_end = dayjs(new Date(start_year, start_month + 1, 0, 23, 59, 59)).format('YYYY-MM-DDTHH:mm:ss')
+                            let month_start = dayjs(new Date(start_year, start_month, 1, 0, 0, 1)).format('YYYY-MM-DDTHH:mm:ss')
+                            data.start_time = month_start
+                            data.end_time = month_end
+                            globals.events.push(data)
+                            break;
+                        }
+                    }
+                    
+                    if(start_month == 11)
+                    {
+                        start_year++
+                        start_month = 0
+                    }
+                    else
+                    {
+                        start_month++
+                    }
+                }
             }
             props.notifyEventUpdate()
             props.toggleModal()

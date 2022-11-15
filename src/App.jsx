@@ -3,7 +3,7 @@ import './styles/App.css'
 import Navbar from './components/Navbar'
 import MainContent from './components/MainContent'
 import Modal from './components/Modal'
-import { getMonth, calculateEventTable, getYear } from "./utils/utils"
+import { getMonth, calculateEventTable, getYear, checkMonthIndex } from "./utils/utils"
 import globals from './utils/globals'
 import ModalEvent from './components/ModalEvent'
 import ModalEventContent from './components/ModalEventContent'
@@ -35,15 +35,16 @@ export default function App() {
 
     React.useEffect( () => {
         async function getData() {
-            const res = await api.getEvents({
-                month: globals.currentMonthIndex,
+            const data = {
+                month: checkMonthIndex(globals.currentMonthIndex),
                 year: globals.currentYear
-            })
-            setEvents(res)
+            }
+            console.log(data)
+            const res = await api.getEvents(data)
             notifyEventUpdate()
         }
         getData()
-    }, [])
+    }, [currentMonth])
 
     React.useEffect( () => {
         async function getData() {
@@ -54,8 +55,12 @@ export default function App() {
     }, [])
 
     function notifyEventUpdate() {
-        setEventArray(calculateEventTable(globals.events))
+        console.log("array calculated")
+        console.log(globals.events)
+        const ev_arr = calculateEventTable(globals.events)
+        setEventArray(ev_arr)
     }
+    
     function changeMonth(event) {
         const {name} = event.target
         if(name === "decrement")
@@ -63,7 +68,8 @@ export default function App() {
         else
             globals.currentMonthIndex++
 
-            globals.currentYear = getYear(globals.currentMonthIndex - 1)
+        globals.currentYear = getYear(globals.currentMonthIndex - 1)
+        globals.events = []
         setCurrentMonth(getMonth(globals.currentMonthIndex - 1))
     }
 

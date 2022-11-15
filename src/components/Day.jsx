@@ -1,15 +1,18 @@
 import React from 'react'
 import EventLine from './EventLine';
 import "../styles/Day.css";
+import globals from '../utils/globals';
+import { checkMonthIndex } from '../utils/utils';
 
 export default function Day(props) {
     const NUMBER_OF_USERS = 3
     
     function getEventArray(userNum) {
-        if(props.userEventArray)
+        if(props.userEventArray) {
             return props.userEventArray[userNum]
+        }
     }
-
+    
     const eventLines = new Array(NUMBER_OF_USERS).fill().map(
         (_, idx) => <EventLine
                         key={idx}
@@ -21,7 +24,14 @@ export default function Day(props) {
 
     return (
         <div className='tile-div'>
-            <span>{props.day.format('DD')}</span>
+            <span>
+            {
+                props.day.format("MM") == checkMonthIndex(globals.currentMonthIndex)
+                ?
+                props.day.format('DD')
+                :
+                <></>
+            }</span>
             <div>
                 {eventLines}
             </div>

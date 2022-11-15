@@ -4,6 +4,8 @@ import MonthLabel from "./MonthLabel";
 import parse from 'html-react-parser'
 import "../styles/Month.css";
 import "../styles/Print.css";
+import globals from "../utils/globals";
+import { checkMonthIndex } from "../utils/utils";
 
 /**
  * What should be done better in project: (it has not been done so far due to lack of time)
@@ -18,27 +20,15 @@ import "../styles/Print.css";
 export default function Month(props) {
   const lt = "<"
   const gt = ">"
-  let isCurrentMonthOK = false
-  let prevDay = 0
 
   // determine if events are related to current month
   function currentMonthDay(day) {
-    const time = new Date(day)
-    const date = time.getDate()
-
-    if(!isCurrentMonthOK && date > 0 && prevDay == 0) {
-      isCurrentMonthOK = true
-      return props.eventArray[date]
-    }
-    else if(isCurrentMonthOK && date > prevDay )
+    if(day.format("MM") == checkMonthIndex(globals.currentMonthIndex))
     {
-      prevDay = date
-      return props.eventArray[date]
-    }
-    else if(isCurrentMonthOK){
-      isCurrentMonthOK = false
+      return props.eventArray[day.format("D")]
     }
     return null
+
   }
 
   return (
@@ -57,6 +47,10 @@ export default function Month(props) {
       <div className="calendar-box">
         {/* TODO: month sidebar should be generated instead of statically written- future job to do */}
         <div className="month-sidebar">
+          <img className="calendar-faceimg calendar-firstimg" src="dog_square_small.jpg"/>
+          <img className="calendar-faceimg" src="face_baby_square_small.jpg"/>
+          <img className="calendar-faceimg" src="face_girl_square_small.jpg"/>
+
           <img className="calendar-faceimg calendar-firstimg" src="dog_square_small.jpg"/>
           <img className="calendar-faceimg" src="face_baby_square_small.jpg"/>
           <img className="calendar-faceimg" src="face_girl_square_small.jpg"/>
