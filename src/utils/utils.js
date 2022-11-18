@@ -128,7 +128,12 @@ export const allowedColors = [
     "#FFBEBC9F",
     "#FFF5BA9F",
     "#85E3FF9F",
-    "#D5AAFF9F",
+    "#AFF8DB9F",
+    "#F6A6FF9F",
+    "#E7FFAC9F",
+    "#BFFCC69F",
+    "#6EB5FF9F",
+    "#FF9CEE9F"
 ]
 
 export const smallImagesArray = [

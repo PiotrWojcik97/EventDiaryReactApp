@@ -16,7 +16,7 @@ export default function App() {
     const [currentMonth, setCurrentMonth] = React.useState(getMonth(globals.currentMonthIndex - 1))
     const [eventArray, setEventArray] = React.useState(calculateEventTable(globals.events))
     const [isAboutActive, setAboutActive] = React.useState(false)
-    const [isUserLoggedIn, setIsUserLoggedIn] = React.useState(false)
+    const [isUserLoggedIn, setIsUserLoggedIn] = React.useState(true)
     const [users, setUsers] = React.useState([])
     const [events, setEvents] = React.useState([])
     const [types, setTypes] = React.useState([])
@@ -39,7 +39,6 @@ export default function App() {
                 month: checkMonthIndex(globals.currentMonthIndex),
                 year: globals.currentYear
             }
-            console.log(data)
             const res = await api.getEvents(data)
             notifyEventUpdate()
         }
@@ -52,11 +51,10 @@ export default function App() {
             setTypes(res)
         }
         getData()
+        console.log(types)
     }, [])
 
     function notifyEventUpdate() {
-        console.log("array calculated")
-        console.log(globals.events)
         const ev_arr = calculateEventTable(globals.events)
         setEventArray(ev_arr)
     }

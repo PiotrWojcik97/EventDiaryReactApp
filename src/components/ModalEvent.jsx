@@ -26,17 +26,35 @@ export default function ModalEvent(props) {
         name: ""
     })
 
-    const [errorMessage, setErrorMessage] = React.useState("")
+    const [typesFormData, setTypesFormData] = React.useState(globals.event_types)
 
-    const colorBoxes = allowedColors.map((color,idx) => {
+    const [errorMessage, setErrorMessage] = React.useState("")
+    const [isEditColorsModalActive, setIsEditColorsModalActive] = React.useState(false)
+
+    const colorBoxes = typesFormData.map(( item, idx) => {
         return <ColorBox
             key={idx}
-            color={color}
+            color={item.color}
             _id={idx}
-            handleClick={handleColorBoxClick}
-            isClicked={idx == formData.eventType ? true : false}
+            handleClick={ isEditColorsModalActive ? doNotHandleColorBoxClick : handleColorBoxClick}
+            isClicked={ isEditColorsModalActive ? false : idx == formData.eventType ? true : false}
             />
     })
+
+    const editColorBoxes = typesFormData.map((item, idx) => {
+        return <div key={idx} className="editBoxes-div">
+                <input
+                    type="text"
+                    placeholder={item.name}
+                    className="form-input-edit"
+                    onChange={handleTypeFormChange}
+                    name={idx}
+                    value={typesFormData[idx].name}
+                />
+                <button type="button" name={idx} onClick={removeEventType} className="remove-button">-</button>
+            </div>
+    })
+
 
     const userBubbles = smallImagesArray.map((img, idx) => {
         return <UserBubble
@@ -48,12 +66,66 @@ export default function ModalEvent(props) {
             />
     })
 
+    function removeEventType(event) {
+        const newArr = structuredClone(typesFormData)
+        const {name, value} = event.target //rename name to index or sth
+        newArr.splice(name, 1)
+        setTypesFormData(newArr)
+    }
+
+    function newEventType() {
+        const NUM_OF_ALLOWED_TYPES = 7
+        if(typesFormData.length < NUM_OF_ALLOWED_TYPES) {
+            const newArr = structuredClone(typesFormData)
+            newArr.push({ 
+                id: getNewID(),
+                name: "New Type",
+                color: getNewTypeColor()})
+            setTypesFormData(newArr)
+        }
+        else {
+            setErrorMessage(`You cannot have more than ${NUM_OF_ALLOWED_TYPES} types`)
+        }
+    }
+
+    function getNewTypeColor() {
+        for(let i=0; i<allowedColors.length; i++){
+            let isNotFound = true
+            for(let j=0; j<typesFormData.length; j++) {
+                if(allowedColors[i] == typesFormData[j].color) {
+                    isNotFound = false
+                    break
+                }
+            }
+            if(isNotFound)
+                return allowedColors[i]
+        }
+    }
+
+    function getNewID() {
+        let newID = -1
+        return newID
+    }
+
+    function handleTypeFormChange(event) {
+        const newArr = structuredClone(typesFormData)
+        const {name, value} = event.target
+        newArr[name] = {    //rename name to index
+            name: value,
+            color: newArr[name].color,
+            id: newArr[name].id
+        }
+        setTypesFormData(newArr)
+    }
+
     function handleColorBoxClick(colorBoxID) {
         setFormData(prevFormData => ({
             ...prevFormData,
             eventType: colorBoxID
         }))
     }
+
+    function doNotHandleColorBoxClick(colorBoxID) {}
 
     function handleUserBubbleClick(userBubbleID) {
         setFormData(prevFormData => ({
@@ -64,27 +136,41 @@ export default function ModalEvent(props) {
 
     // returns true if everything is ok
     function _validateForm() {
-        if(!formData.startDate) {
-            setErrorMessage("Start date cannot be empty")
-            return false
+        if(isEditColorsModalActive) {
+            
+            // check length
+            for(let i=0; i < typesFormData.length; i++) {
+                if(typesFormData[i].name.length < 3)
+                {
+                    setErrorMessage("Type must have at least 3 characters")
+                    return false
+                }
+            }
         }
-        
-        if(!formData.endDate) {
-            setErrorMessage("End date cannot be empty")
-            return false
-        }
+        else
+        {
+            if(!formData.startDate) {
+                setErrorMessage("Start date cannot be empty")
+                return false
+            }
+            
+            if(!formData.endDate) {
+                setErrorMessage("End date cannot be empty")
+                return false
+            }
 
-        const startDate = new Date(formData.startDate)
-        const endDate = new Date(formData.endDate)
+            const startDate = new Date(formData.startDate)
+            const endDate = new Date(formData.endDate)
 
-        if (startDate > endDate) {
-            setErrorMessage("Start date cannot be greater than end date")
-            return false
-        }
-        
-        if(formData.name == "") {
-            setErrorMessage("Event name cannot be empty")
-            return false
+            if (startDate > endDate) {
+                setErrorMessage("Start date cannot be greater than end date")
+                return false
+            }
+            
+            if(formData.name == "") {
+                setErrorMessage("Event name cannot be empty")
+                return false
+            }
         }
         setErrorMessage("")
         return true
@@ -96,6 +182,51 @@ export default function ModalEvent(props) {
         if(startMonth == endMonth)
             return true
         return false
+    }
+
+    function handleColorsSubmit(event) {
+        event.preventDefault()
+        if(_validateForm()) {
+            resolveChanges()
+            setIsEditColorsModalActive(false)
+        }
+    }
+
+    function resolveChanges() {
+        for( let i=0; i < globals.event_types.length; i++) {
+            let isGlobalFound = false
+            for( let j=0; j < typesFormData.length; j++) {
+                if(typesFormData[j].id == globals.event_types[i].id){
+                    isGlobalFound = true
+                    if( typesFormData[j].color != globals.event_types[i].color ||
+                        typesFormData[j].name != globals.event_types[i].name ) {
+                            
+                            api.updateType({
+                                id: typesFormData[j].id,
+                                name: typesFormData[j].name,
+                                color: typesFormData[j].color
+                            })
+                        }
+                }
+                if(typesFormData[j].id < 0) {
+                    api.createType({
+                        name: typesFormData[j].name,
+                        color: typesFormData[j].color
+                    })
+
+                    typesFormData[j].id = 0
+                }
+            }
+            if(!isGlobalFound) {
+
+                api.deleteEventByTypeId(globals.event_types[i].id)
+                api.deleteType(globals.event_types[i].id)
+            }
+        }
+        globals.event_types = api.getTypes()
+        if(!globals.event_types)
+            globals.event_types = []
+        props.notifyEventUpdate()
     }
 
     function handleSubmit(event) {
@@ -193,58 +324,89 @@ export default function ModalEvent(props) {
     return (
         <div className="modal">
             <div className="overlay" onClick={props.toggleModal}></div>
-            <div className="modal-content">
-                <form onSubmit={handleSubmit}>
-                    <h2>Create Event</h2>
-
-                    <input
-                        type="text"
-                        placeholder="Event name"
-                        className="form-input"
-                        onChange={handleFormChange}
-                        name="name"
-                        value={formData.name}
-                    />
-                    <span>Start time</span>
-                    <input
-                        type="datetime-local"
-                        className="form-input"
-                        onChange={handleFormChange}
-                        name="startDate"
-                        defaultValue={formData.startDate}
-                    />
-                    <span>End time</span>
-                    <input
-                        type="datetime-local"
-                        className="form-input"
-                        onChange={handleFormChange}
-                        name="endDate"
-                        defaultValue={formData.endDate}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Event short description"
-                        className="form-input"
-                        onChange={handleFormChange}
-                        name="shortDescription"
-                        value={formData.shortDescription}
-                    />
-                    <textarea
-                        placeholder="Event long description"
-                        onChange={handleFormChange}
-                        name="longDescription"
-                        value={formData.longDescription}
-                    />
-                    <span id="color-span">Choose color</span>
-                    <div className="div-boxesContainer">
-                        {colorBoxes}
-                    </div>
-                    <span id="color-span">Choose user</span>
-                    <div className="div-boxesContainer">
-                        {userBubbles}
-                    </div>
-                    <h4 className="warning-h4">{errorMessage}</h4>
-                    <button className="form-button">Submit</button>
+            <div className="modal-content" id="modal-edit">
+                <form onSubmit={isEditColorsModalActive ? handleColorsSubmit: handleSubmit}>
+                {isEditColorsModalActive
+                ?
+                    <>
+                        <span>
+                            <h2>Warning</h2>
+                            Deleting type with assigned events will cause all related events deletion
+                        </span>
+                        <div className="main-changeColor-div">
+                            <div className="colorBox-holder color-boxes-margin">
+                                {colorBoxes}
+                            <button type='button' onClick={() => {newEventType()}} className="add-button">+</button>
+                            </div>
+                            <div className="colorBox-holder">
+                                {editColorBoxes}
+                            </div>
+                        </div>
+                        <div className="editColorbottomButtons-div">
+                            <h4 className="warning-h4">{errorMessage}</h4>
+                            <button>Save</button>
+                            <button type='button'
+                                onClick={() => {
+                                    setErrorMessage("")
+                                    setIsEditColorsModalActive(false)
+                                    setTypesFormData(globals.event_types)}}
+                                className="cancel-button">Cancel</button>
+                        </div>
+                    </>
+                :
+                    <>
+                        <h2 className="title-h2" >Create Event</h2>
+                        <input
+                            type="text"
+                            placeholder="Event name"
+                            className="form-input"
+                            onChange={handleFormChange}
+                            name="name"
+                            value={formData.name}
+                        />
+                        <span className="span-form">Start time</span>
+                        <input
+                            type="datetime-local"
+                            className="form-input"
+                            onChange={handleFormChange}
+                            name="startDate"
+                            defaultValue={formData.startDate}
+                        />
+                        <span className="span-form">End time</span>
+                        <input
+                            type="datetime-local"
+                            className="form-input"
+                            onChange={handleFormChange}
+                            name="endDate"
+                            defaultValue={formData.endDate}
+                        />
+                        <input
+                            type="text"
+                            placeholder="Event short description"
+                            className="form-input"
+                            onChange={handleFormChange}
+                            name="shortDescription"
+                            value={formData.shortDescription}
+                        />
+                        <textarea
+                            placeholder="Event long description"
+                            onChange={handleFormChange}
+                            name="longDescription"
+                            value={formData.longDescription}
+                        />
+                        <span id="color-span">Choose event type</span>
+                        <div className="div-boxesContainer">
+                            {colorBoxes}
+                        </div>
+                        <button type='button' onClick={ () => {setIsEditColorsModalActive(true)}} className="color-edit-button">Edit Types</button>
+                        <span id="user-span">Choose user</span>
+                        <div className="div-boxesContainer">
+                            {userBubbles}
+                        </div>
+                        <h4 className="warning-h4">{errorMessage}</h4>
+                        <button className="form-button">Submit</button>
+                    </>
+                }
                 </form>
                 <button className="close-modal" onClick={props.toggleModal}>X</button>
             </div>  
