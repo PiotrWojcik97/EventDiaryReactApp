@@ -86,7 +86,7 @@ export default function Modal(props) {
                         value={formData.newPassword}
                     />
                     <h4 className="warning-h4">{warningText}</h4>
-                    <div>
+                    <div className="button-div">
                         <button id="button-login" className="form-button">Change</button>
                         <button id="button-cancel" onClick={() => {
                             setIsChangePasswordClicked(false)

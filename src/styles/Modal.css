@@ -106,6 +106,7 @@ form {
 
 #button-login {
     margin-top: 0px;
+    margin-right: 40px
 }
 
 #button-cancel {
@@ -113,7 +114,11 @@ form {
 }
 
 .align-modals-div {
-    margin-top: 62px;
+    margin-top: 100px;
+}
+
+.button-div {
+    margin-top: 46px
 }
 
 #login-input {

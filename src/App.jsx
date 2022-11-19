@@ -16,10 +16,12 @@ export default function App() {
     const [currentMonth, setCurrentMonth] = React.useState(getMonth(globals.currentMonthIndex - 1))
     const [eventArray, setEventArray] = React.useState(calculateEventTable(globals.events))
     const [isAboutActive, setAboutActive] = React.useState(false)
-    const [isUserLoggedIn, setIsUserLoggedIn] = React.useState(true)
+    const [isUserLoggedIn, setIsUserLoggedIn] = React.useState(false)
     const [users, setUsers] = React.useState([])
     const [events, setEvents] = React.useState([])
     const [types, setTypes] = React.useState([])
+    const [updateCounter, setUpdateCounter] = React.useState(0)
+    const [updateTrigger, setUpdateTrigger] = React.useState(0)
 
     // init year in globals
     if(globals.currentYear == 0)
@@ -43,7 +45,7 @@ export default function App() {
             notifyEventUpdate()
         }
         getData()
-    }, [currentMonth])
+    }, [currentMonth, updateTrigger])
 
     React.useEffect( () => {
         async function getData() {
@@ -51,12 +53,15 @@ export default function App() {
             setTypes(res)
         }
         getData()
-        console.log(types)
-    }, [])
+    }, [currentMonth, updateTrigger])
 
     function notifyEventUpdate() {
         const ev_arr = calculateEventTable(globals.events)
         setEventArray(ev_arr)
+        if(updateCounter % 2 == 0) {
+            setUpdateTrigger(prevUpdateTrigger => prevUpdateTrigger + 1 )
+        }
+        setUpdateCounter( prevUpdateCounter => prevUpdateCounter + 1 )
     }
     
     function changeMonth(event) {

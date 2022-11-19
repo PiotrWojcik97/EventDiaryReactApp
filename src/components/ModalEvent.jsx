@@ -35,9 +35,9 @@ export default function ModalEvent(props) {
         return <ColorBox
             key={idx}
             color={item.color}
-            _id={idx}
+            _id={item.id}
             handleClick={ isEditColorsModalActive ? doNotHandleColorBoxClick : handleColorBoxClick}
-            isClicked={ isEditColorsModalActive ? false : idx == formData.eventType ? true : false}
+            isClicked={ isEditColorsModalActive ? false : item.id == formData.eventType ? true : false}
             />
     })
 
@@ -188,7 +188,7 @@ export default function ModalEvent(props) {
         event.preventDefault()
         if(_validateForm()) {
             resolveChanges()
-            setIsEditColorsModalActive(false)
+            props.toggleModal()
         }
     }
 
@@ -218,15 +218,21 @@ export default function ModalEvent(props) {
                 }
             }
             if(!isGlobalFound) {
-
+                deleteEventsByTypeIdGlobals(globals.event_types[i].id)
                 api.deleteEventByTypeId(globals.event_types[i].id)
                 api.deleteType(globals.event_types[i].id)
             }
         }
-        globals.event_types = api.getTypes()
-        if(!globals.event_types)
-            globals.event_types = []
         props.notifyEventUpdate()
+    }
+
+    function deleteEventsByTypeIdGlobals(type_id) {
+        for(let i=0;i<globals.events.length;i++) {
+            if(globals.events[i].type_id == type_id) {
+                globals.events.splice(i, 1)
+                i--
+            }
+        }
     }
 
     function handleSubmit(event) {
@@ -242,7 +248,7 @@ export default function ModalEvent(props) {
                 long_description: formData.longDescription,
                 image: "img url",
                 image_description: "img url",
-                type_id: formData.eventType + 1
+                type_id: formData.eventType
             }
 
             api.createEvent(data)

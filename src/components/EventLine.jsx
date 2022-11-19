@@ -19,7 +19,7 @@ export default function EventLine(props) {
           eventID={eventItem.eventID}
           startPos={eventItem.startTime}
           endPos={eventItem.endTime}
-          colorID={eventItem.colorID}
+          type_id={eventItem.type_id}
           toggleModalEventContent = {props.toggleModalEventContent}
         />
       )

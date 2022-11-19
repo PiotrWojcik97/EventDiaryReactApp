@@ -2,6 +2,7 @@ import axios from "axios";
 import globals from "../utils/globals";
 
 class Api {
+
     constructor() {
         this.backend = axios.create({
             baseURL: `http://localhost:3000`,
@@ -97,6 +98,7 @@ class Api {
 
     createEvent = async(data) => {
         try {
+            console.log(data)
             let response = await this.backend.post('/api/v1/event/create_single.php', data)
             console.log(response)
         }
@@ -143,6 +145,9 @@ class Api {
         try {
             let response = await this.backend.post(`/api/v1/user/login.php`, data)
             console.log(response)
+            if(response.data.res == "OK") {
+                this.backend.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
+            }
             return response.data.res
         }
         catch(e) {

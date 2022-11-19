@@ -61,7 +61,7 @@ export function calculateEventTable(data){
             const startDate = new Date(event.start_time)
             const endDate = new Date(event.end_time)
             const user_id = event.user_id - 3 // TODO: hardcoded users (offset is 3 between real db id values compared to val in fronted app)
-            const colorName = event.type_id - 1 // TODO: types are starting from 1 in db
+            const type_id = event.type_id
             const eventID = event.id
     
             // handle multi-day event
@@ -87,7 +87,7 @@ export function calculateEventTable(data){
                     arr[i][user_id].push({
                         startTime: start_time,
                         endTime: end_time,
-                        colorID: colorName,
+                        type_id: type_id,
                         eventID: eventID,
                     })
                 }
@@ -100,7 +100,7 @@ export function calculateEventTable(data){
                 arr[startDate.getDate()][user_id].push({
                     startTime: start_time,
                     endTime: end_time,
-                    colorID: colorName,
+                    type_id: type_id,
                     eventID: eventID,
                 })
             }
