@@ -52,6 +52,7 @@ export default function ModalSort(props) {
         })
 
         globals.filters = filterArray
+        props.toggleModal()
         props.notifyEventUpdate()
     }
 
