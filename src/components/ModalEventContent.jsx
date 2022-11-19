@@ -178,9 +178,9 @@ export default function ModalEventContent(props) {
                     setErrorMessage("Type must have at least 3 characters")
                     return false
                 }
-                if(typesFormData[i].name.length > 15)
+                if(typesFormData[i].name.length > 25)
                 {
-                    setErrorMessage("Type must be shorter than 15 characters")
+                    setErrorMessage("Type must be shorter than 25 characters")
                     return false
                 }
             }

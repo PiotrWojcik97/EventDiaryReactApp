@@ -7,12 +7,14 @@ import { getMonth, calculateEventTable, getYear, checkMonthIndex } from "./utils
 import globals from './utils/globals'
 import ModalEvent from './components/ModalEvent'
 import ModalEventContent from './components/ModalEventContent'
+import ModalSort from './components/ModalSort'
 import api from './api/api'
 
 export default function App() {
     const [modal, setModal] = React.useState(false);
     const [modalEvent, setModalEvent] = React.useState(false);
     const [modalEventContent, setModalEventContent] = React.useState(false);
+    const [modalSort, setModalSort] = React.useState(false);
     const [currentMonth, setCurrentMonth] = React.useState(getMonth(globals.currentMonthIndex - 1))
     const [eventArray, setEventArray] = React.useState(calculateEventTable(globals.events))
     const [isAboutActive, setAboutActive] = React.useState(false)
@@ -50,10 +52,72 @@ export default function App() {
     React.useEffect( () => {
         async function getData() {
             const res = await api.getTypes()
-            setTypes(res)
+            globals.filters = res.map( item => {
+                return {
+                    type_id: item.id,
+                    isNotFiltered: true
+                }
+            })
         }
         getData()
+    }, [])
+
+    React.useEffect( () => {
+        async function getData() {
+            const res = await api.getTypes()
+            try {
+                resolveFilters(res)
+                setTypes(res)
+            }
+            catch {
+                // sporadic exception that res is promise not fulfilled
+            }
+        }
+        getData()
+
     }, [currentMonth, updateTrigger])
+
+
+    function resolveFilters(event_types) {
+
+        if(globals.filters == undefined) {
+            globals.filters = res.map( item => {
+                return {
+                    type_id: item.id,
+                    isNotFiltered: true
+                }
+            })
+        }
+
+        // check for adding filters in case new event_type was added
+        for(let i=0; i < event_types.length; i++) {
+            let isFilterFound = false
+            for(let j=0; j < globals.filters.length; j++) {
+                if(event_types[i].id == globals.filters[j].type_id ) {
+                    isFilterFound = true
+                }
+            }
+            if(!isFilterFound) {
+                globals.filters.push({
+                    type_id: event_types[i].id,
+                    isNotFiltered: true
+                })
+            }
+        }
+
+        // check for deleting filters in case some event_type was deleted 
+        for(let i=0; i < globals.filters.length; i++) {
+            let isEventTypeFound = false
+            for(let j=0; j < event_types.length; j++) {
+                if(event_types[j].id == globals.filters[i].type_id ) {
+                    isEventTypeFound = true
+                }
+            }
+            if(!isEventTypeFound) {
+                globals.filters.splice(i, 1)
+            }
+        }
+    }
 
     function notifyEventUpdate() {
         const ev_arr = calculateEventTable(globals.events)
@@ -84,6 +148,10 @@ export default function App() {
         setModalEvent(prevEventModal => !prevEventModal)
     }
 
+    function toggleSortModal() {
+        setModalSort(prevSortModal => !prevSortModal)
+    }
+
     function toggleModalEventContent() {
         setModalEventContent(prevModalEventContent => !prevModalEventContent)
     }
@@ -100,11 +168,13 @@ export default function App() {
                     eventArray={eventArray} 
                     toggleEventModal={toggleEventModal}
                     toggleModalEventContent={toggleModalEventContent}
+                    toggleModalSort={toggleSortModal}
                     isAboutActive={isAboutActive}
                     isUserLoggedIn={isUserLoggedIn}
                     />
                 {modal && <Modal toggleModal={toggleModal} setIsUserLoggedIn={setIsUserLoggedIn} isUserLoggedIn={isUserLoggedIn}/>}
                 {modalEvent && <ModalEvent toggleModal={toggleEventModal} notifyEventUpdate={notifyEventUpdate} />}
+                {modalSort && <ModalSort toggleModal={toggleSortModal} notifyEventUpdate={notifyEventUpdate}/> }
                 {modalEventContent && <ModalEventContent 
                     toggleModal={toggleModalEventContent}
                     eventID={globals.currentEventClicked}

@@ -5,6 +5,17 @@ import globals from '../utils/globals';
 
 export default function Event(props) {
     const color = getColor()
+    const isNotFiltered = getFilters() 
+
+    function getFilters() {
+        if(globals.filters == undefined) {
+            return true
+        }
+        for(let i=0; i < globals.filters.length; i++) {
+            if(globals.filters[i].type_id == props.type_id)
+                return globals.filters[i].isNotFiltered
+        }
+    }
 
     function getColor() {
         for(let i=0; i < globals.event_types.length; i++)
@@ -36,14 +47,20 @@ export default function Event(props) {
         props.toggleModalEventContent()
     }
 
-    return (
-        <div
-            className='event-div'
-            style={{"width": `${calculateEventWidth()}%`,
-                    "marginLeft": `${100*(props.startPos)}%`,
-                    "backgroundColor": `${color}`
-                }}
-            onClick={EventClicked}
-        />
-    )
+    if(isNotFiltered) {
+        return (
+            <div
+                className='event-div'
+                style={{"width": `${calculateEventWidth()}%`,
+                        "marginLeft": `${100*(props.startPos)}%`,
+                        "backgroundColor": `${color}`
+                    }}
+                onClick={EventClicked}
+            />
+        )
+    }
+    else {
+        return <div></div>
+    }
+
 }

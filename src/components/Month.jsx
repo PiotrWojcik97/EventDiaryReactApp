@@ -34,6 +34,7 @@ export default function Month(props) {
   return (
     <div>
       <div className='month-name'>
+        <button id="calendar-button-filter" onClick={props.toggleModalSort} className='printInvisible'>Filter</button>
         {props.isUserLoggedIn ? <button id="calendar-button-create" className="printInvisible" onClick={props.toggleEventModal}>Create Event</button> : <div id="calendar-button-create"></div>}
         <button id="calendar-button-left" className="printInvisible" name="decrement" onClick={props.changeMonth}>{parse(lt)}</button>
         <h3>{props.month[2][1].format("MMMM YYYY")}</h3>

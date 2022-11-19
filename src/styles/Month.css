@@ -62,9 +62,13 @@
 
 #calendar-button-create {
     margin: 10px;
-    width: 150px;
-    margin-left: 40px;
+    width: 120px;
     margin-right: auto; 
+}
+
+#calendar-button-filter {
+    margin: 10px;
+    margin-left: 40px;
 }
 
 .title {

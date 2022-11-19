@@ -261,3 +261,47 @@ textarea {
 .cancel-button {
     margin-left: 196px;
 }
+
+#sort-modal {
+    display: flex;
+}
+
+#sort-modal > div {
+    margin-top: 45px;
+    margin-bottom: 50px;
+    margin-left: 5px;
+}
+
+.name-div {
+    margin-top: 16px;
+    margin-bottom: 21px;
+}
+
+.checkbox {
+    margin-top: 16px;
+    margin-bottom: 3px;
+    width: 25px;
+    height: 25px;
+    accent-color: #ff5200;
+    cursor: pointer;
+}
+
+.apply-button {
+    position: absolute;
+    bottom: 15px;
+    width: 100px;
+    left: 20px;
+}
+
+.clear-button {
+    position: absolute;
+    bottom: 15px;
+    right: 20px;
+    width: 100px;
+}
+
+.sort-title {
+    position: absolute;
+    top: 0px;
+    left: calc(50% - 50px);
+}

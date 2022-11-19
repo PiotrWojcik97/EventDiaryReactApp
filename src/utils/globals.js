@@ -7,5 +7,6 @@ const globals = {
   users: [],
   events: [],
   event_types: [],
+  filters: undefined,
 };
 export default globals;
