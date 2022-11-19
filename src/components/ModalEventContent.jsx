@@ -170,7 +170,6 @@ export default function ModalEventContent(props) {
     // returns true if everything is ok
     function _validateForm() {
         if(isEditColorsModalActive) {
-            
             // check length
             for(let i=0; i < typesFormData.length; i++) {
                 if(typesFormData[i].name.length < 3)

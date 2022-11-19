@@ -149,6 +149,12 @@ export default function ModalEvent(props) {
         }
         else
         {
+            if(formData.eventType == 0)
+            {
+                setErrorMessage("You need to choose event type")
+                return false
+            }
+
             if(!formData.startDate) {
                 setErrorMessage("Start date cannot be empty")
                 return false
