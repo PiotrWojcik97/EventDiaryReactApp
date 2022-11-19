@@ -170,6 +170,7 @@ export default function ModalEventContent(props) {
     // returns true if everything is ok
     function _validateForm() {
         if(isEditColorsModalActive) {
+            
             // check length
             for(let i=0; i < typesFormData.length; i++) {
                 if(typesFormData[i].name.length < 3)
@@ -177,10 +178,21 @@ export default function ModalEventContent(props) {
                     setErrorMessage("Type must have at least 3 characters")
                     return false
                 }
+                if(typesFormData[i].name.length > 15)
+                {
+                    setErrorMessage("Type must be shorter than 15 characters")
+                    return false
+                }
             }
         }
         else
         {
+            if(formData.eventType == 0)
+            {
+                setErrorMessage("You need to choose event type")
+                return false
+            }
+
             if(!formData.startDate) {
                 setErrorMessage("Start date cannot be empty")
                 return false
@@ -201,6 +213,22 @@ export default function ModalEventContent(props) {
             
             if(formData.name == "") {
                 setErrorMessage("Event name cannot be empty")
+                return false
+            }
+            if(formData.name.length > 25) {
+                setErrorMessage("Event name cannot be longer than 25 characters")
+                return false
+            }
+            if(formData.name.length < 3) {
+                setErrorMessage("Event name cannot be shorter than 3 characters")
+                return false
+            }
+            if(formData.shortDescription.length > 100) {
+                setErrorMessage("Short description cannot be longer than 100 characters")
+                return false
+            }
+            if(formData.longDescription.length > 1000) {
+                setErrorMessage("Long description cannot be longer than 1000 characters")
                 return false
             }
         }

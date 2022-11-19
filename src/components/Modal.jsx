@@ -16,30 +16,67 @@ export default function Modal(props) {
     const [warningText, setWarningText] = React.useState("")
     const [isChangePasswordClicked, setIsChangePasswordClicked] = React.useState(false)
 
+
+    //return true if everything is ok
+    function validateForm() {
+        if(formData.username == "") {
+            setWarningText("Username cannot be empty")
+            return false
+        }
+        if(formData.username.length < 3 || formData.username.length > 20) {
+            setWarningText("Invalid username, should be between 3 to 20 characters")
+            return false
+        }
+        if(formData.password == "") {
+            setWarningText("Password cannot be empty")
+            return false
+        }
+        if(formData.password.length < 3 || formData.password.length > 20) {
+            setWarningText("Invalid password, should be between 3 to 20 characters")
+            return false
+        }
+        if(isChangePasswordClicked) {
+            if(formData.newPassword == ""){
+                setWarningText("Password cannot be empty")
+                return false
+            }
+            if(formData.newPassword.length < 3 || formData.newPassword.length > 20) {
+                setWarningText("Invalid new password, should be between 3 to 20 characters")
+                return false
+            }      
+        }
+        setWarningText("")
+        return true
+    }
+
+
     async function handleSubmit(event) {
         event.preventDefault()
         let res
-        if(isChangePasswordClicked) {
-            res = await api.changePassword(formData)
-        }
-        else {
-            res = await api.login({
-                username: formData.username,
-                password: formData.password,
-            })
-        }
-        if( res != "OK"){
-            setWarningText("Wrong credentials")
-        }
-        else {
+        
+        if(validateForm()){
             if(isChangePasswordClicked) {
-                setIsChangePasswordClicked(false)
-                setWarningText("")
+                res = await api.changePassword(formData)
             }
             else {
-                // change avatar
-                props.setIsUserLoggedIn(true)
-                props.toggleModal()
+                res = await api.login({
+                    username: formData.username,
+                    password: formData.password,
+                })
+            }
+            if( res != "OK"){
+                setWarningText("Wrong credentials")
+            }
+            else {
+                if(isChangePasswordClicked) {
+                    setIsChangePasswordClicked(false)
+                    setWarningText("")
+                }
+                else {
+                    // change avatar
+                    props.setIsUserLoggedIn(true)
+                    props.toggleModal()
+                }
             }
         }
     }

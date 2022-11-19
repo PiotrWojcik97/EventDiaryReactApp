@@ -145,6 +145,11 @@ export default function ModalEvent(props) {
                     setErrorMessage("Type must have at least 3 characters")
                     return false
                 }
+                if(typesFormData[i].name.length > 15)
+                {
+                    setErrorMessage("Type must be shorter than 15 characters")
+                    return false
+                }
             }
         }
         else
@@ -175,6 +180,22 @@ export default function ModalEvent(props) {
             
             if(formData.name == "") {
                 setErrorMessage("Event name cannot be empty")
+                return false
+            }
+            if(formData.name.length > 25) {
+                setErrorMessage("Event name cannot be longer than 25 characters")
+                return false
+            }
+            if(formData.name.length < 3) {
+                setErrorMessage("Event name cannot be shorter than 3 characters")
+                return false
+            }
+            if(formData.shortDescription.length > 100) {
+                setErrorMessage("Short description cannot be longer than 100 characters")
+                return false
+            }
+            if(formData.longDescription.length > 1000) {
+                setErrorMessage("Long description cannot be longer than 1000 characters")
                 return false
             }
         }
