@@ -2,8 +2,8 @@ import axios from "axios";
 import globals from "../utils/globals";
 import { localStorageGetJWT, localStorageWriteJWT } from "../utils/localStorage";
 class Api {
-
     constructor() {
+        this.IS_LOGGING_ACTIVE = false
         this.backend = axios.create({
             baseURL: `http://localhost:3000`,
             headers: {
@@ -28,7 +28,8 @@ class Api {
             return retVal
         }
         catch(e) {
-            console.log(e)
+            if(this.IS_LOGGING_ACTIVE)
+                console.log(e)
             return undefined
         }
     }
@@ -45,7 +46,8 @@ class Api {
             return retVal
         }
         catch(e) {
-            console.log(e)
+            if(this.IS_LOGGING_ACTIVE)
+                console.log(e)
             return undefined
         }
     }
@@ -53,10 +55,12 @@ class Api {
     createType = async(data) => {
         try {
             let response = await this.backend.post('/api/v1/type/create_single.php', data)
-            console.log(response)
+            if(this.IS_LOGGING_ACTIVE)
+                console.log(response)
         }
         catch(e) {
-            console.log(e)
+            if(this.IS_LOGGING_ACTIVE)
+                console.log(e)
             return undefined
         }
     }
@@ -64,10 +68,12 @@ class Api {
     deleteType = async(id) => {
         try {
             let response = await this.backend.delete(`/api/v1/type/delete.php?id=${id}`)
-            console.log(response)
+            if(this.IS_LOGGING_ACTIVE)
+                console.log(response)
         }
         catch(e) {
-            console.log(e)
+            if(this.IS_LOGGING_ACTIVE)
+                console.log(e)
             return undefined
         }
     }
@@ -75,10 +81,12 @@ class Api {
     updateType = async(data) => {
         try {
             let response = await this.backend.post(`/api/v1/type/update.php`, data)
-            console.log(response)
+            if(this.IS_LOGGING_ACTIVE)
+                console.log(response)
         }
         catch(e) {
-            console.log(e)
+            if(this.IS_LOGGING_ACTIVE)
+                console.log(e)
             return undefined
         }
     }
@@ -95,19 +103,23 @@ class Api {
             return retVal
         }
         catch(e) {
-            console.log(e)
+            if(this.IS_LOGGING_ACTIVE)
+                console.log(e)
             return undefined
         }
     }
 
     createEvent = async(data) => {
         try {
-            console.log(data)
+            if(this.IS_LOGGING_ACTIVE)
+                console.log(data)
             let response = await this.backend.post('/api/v1/event/create_single.php', data)
-            console.log(response)
+            if(this.IS_LOGGING_ACTIVE)
+                console.log(response)
         }
         catch(e) {
-            console.log(e)
+            if(this.IS_LOGGING_ACTIVE)
+                console.log(e)
             return undefined
         }
     }
@@ -115,10 +127,12 @@ class Api {
     deleteEvent = async(id) => {
         try {
             let response = await this.backend.delete(`/api/v1/event/delete.php?id=${id}`)
-            console.log(response)
+            if(this.IS_LOGGING_ACTIVE)
+                console.log(response)
         }
         catch(e) {
-            console.log(e)
+            if(this.IS_LOGGING_ACTIVE)
+                console.log(e)
             return undefined
         }
     }
@@ -126,10 +140,12 @@ class Api {
     deleteEventByTypeId = async(type_id) => {
         try {
             let response = await this.backend.delete(`/api/v1/event/delete_type_id.php?type_id=${type_id}`)
-            console.log(response)
+            if(this.IS_LOGGING_ACTIVE)
+                console.log(response)
         }
         catch(e) {
-            console.log(e)
+            if(this.IS_LOGGING_ACTIVE)
+                console.log(e)
             return undefined
         }
     }
@@ -137,10 +153,12 @@ class Api {
     updateEvent = async(data) => {
         try {
             let response = await this.backend.post(`/api/v1/event/update.php`, data)
-            console.log(response)
+            if(this.IS_LOGGING_ACTIVE)
+                console.log(response)
         }
         catch(e) {
-            console.log(e)
+            if(this.IS_LOGGING_ACTIVE)
+                console.log(e)
             return undefined
         }
     }
@@ -148,7 +166,8 @@ class Api {
     login = async(data) => {
         try {
             let response = await this.backend.post(`/api/v1/user/login.php`, data)
-            console.log(response)
+            if(this.IS_LOGGING_ACTIVE)
+                console.log(response)
             if(response.data.res == "OK") {
                 this.backend.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
                 localStorageWriteJWT(response.data.token)
@@ -156,7 +175,8 @@ class Api {
             return response.data.res
         }
         catch(e) {
-            console.log(e)
+            if(this.IS_LOGGING_ACTIVE)
+                console.log(e)
             return undefined
         }
     }
@@ -164,11 +184,13 @@ class Api {
     changePassword = async(data) => {
         try {
             let response = await this.backend.post(`/api/v1/user/change_password.php`, data)
-            console.log(response)
+            if(this.IS_LOGGING_ACTIVE)
+                console.log(response)
             return response.data.res
         }
         catch(e) {
-            console.log(e)
+            if(this.IS_LOGGING_ACTIVE)
+                console.log(e)
             return undefined
         }
     }
