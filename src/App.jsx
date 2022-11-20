@@ -40,7 +40,7 @@ export default function App() {
 
     React.useEffect( () => {
         async function getData() {
-            await new Promise(r => setTimeout(r, 500)) // 500ms timeout workaround for traffic time in network
+            await new Promise(r => setTimeout(r, 300)) // ms timeout workaround for traffic time in network
             const data = {
                 month: checkMonthIndex(globals.currentMonthIndex),
                 year: globals.currentYear
@@ -53,7 +53,7 @@ export default function App() {
 
     React.useEffect( () => {
         async function getData() {
-            await new Promise(r => setTimeout(r, 500)) // 500ms timeout workaround for traffic time in network
+            await new Promise(r => setTimeout(r, 300)) // ms timeout workaround for traffic time in network
             const res = await api.getTypes()
             globals.filters = res.map( item => {
                 return {
@@ -67,7 +67,7 @@ export default function App() {
 
     React.useEffect( () => {
         async function getData() {
-            await new Promise(r => setTimeout(r, 500)) // 500ms timeout workaround for traffic time in network
+            await new Promise(r => setTimeout(r, 300)) // ms timeout workaround for traffic time in network
             const res = await api.getTypes()
             try {
                 resolveFilters(res)
@@ -141,6 +141,8 @@ export default function App() {
 
         globals.currentYear = getYear(globals.currentMonthIndex - 1)
         globals.events = []
+        const ev_arr = calculateEventTable(globals.events)
+        setEventArray(ev_arr)
         setCurrentMonth(getMonth(globals.currentMonthIndex - 1))
     }
 

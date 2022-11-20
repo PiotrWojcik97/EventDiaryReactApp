@@ -51,7 +51,7 @@ export default function MainContent(props) {
                     <h4 className="title">Project specific</h4>
                     <span>
                         ✔️ REST API<br />
-                        &nbsp;&nbsp;&nbsp;&nbsp;✔️ GET, POST, DELETE Methods<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;✔️ GET, POST, DELETE, PUT Methods<br />
                         &nbsp;&nbsp;&nbsp;&nbsp;✔️ 200, 400, 401 Statues<br />
                         &nbsp;&nbsp;&nbsp;&nbsp;✔️ API Authentication with JWT<br />
                         &nbsp;&nbsp;&nbsp;&nbsp;❌ No pure REST API Style (PHP Rest API style: url endings present with .php Solution: adding nginx with configuration)<br />
@@ -64,6 +64,7 @@ export default function MainContent(props) {
                         &nbsp;&nbsp;&nbsp;&nbsp;✔️ Scripts to create database with example data<br />
                         &nbsp;&nbsp;&nbsp;&nbsp;✔️ Able to retrieve stored image in database<br />
                         &nbsp;&nbsp;&nbsp;&nbsp;✔️ Git versioning<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;✔️ Deploying app to Azure by github pipeline on a commit<br />
                         &nbsp;&nbsp;&nbsp;&nbsp;✔️ JWT authentication implementation (lasting for one day)<br />
                         &nbsp;&nbsp;&nbsp;&nbsp;❌ REST API data validation (Done in front end, however should be done also in backend)<br />
                         &nbsp;&nbsp;&nbsp;&nbsp;❌ Project configuration .yaml file (e.g. containing database address)<br />
@@ -83,7 +84,7 @@ export default function MainContent(props) {
                         &nbsp;&nbsp;&nbsp;&nbsp;✔️ Local storage for JWT<br />
                         &nbsp;&nbsp;&nbsp;&nbsp;✔️ JWT validation at app open<br />
                         &nbsp;&nbsp;&nbsp;&nbsp;✔️ Git versioning<br />
-                        &nbsp;&nbsp;&nbsp;&nbsp;✔️ Deploying app to Azure github pipeline present<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;✔️ Deploying app to Azure by github pipeline on a commit<br />
                         &nbsp;&nbsp;&nbsp;&nbsp;❌ JWT expiration date hardcoded in frontend<br />
                         &nbsp;&nbsp;&nbsp;&nbsp;❌ Project configuration .yaml file (e.g. containing back end address)<br />
                         &nbsp;&nbsp;&nbsp;&nbsp;❌ No positive confirmation after successful action (e.g. after event creation)<br />
