@@ -1,6 +1,6 @@
 import axios from "axios";
 import globals from "../utils/globals";
-
+import { localStorageGetJWT, localStorageWriteJWT } from "../utils/localStorage";
 class Api {
 
     constructor() {
@@ -11,6 +11,10 @@ class Api {
                 "Access-Control-Allow-Origin": '*'
             }
         })
+        let token = localStorageGetJWT()
+        if(token) {
+            this.backend.defaults.headers.common['Authorization'] = `Bearer ${token}`
+        }
     }
 
     getUsers = async() => {
@@ -147,6 +151,7 @@ class Api {
             console.log(response)
             if(response.data.res == "OK") {
                 this.backend.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
+                localStorageWriteJWT(response.data.token)
             }
             return response.data.res
         }

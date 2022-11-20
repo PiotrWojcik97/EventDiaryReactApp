@@ -1,6 +1,7 @@
 import React from "react";
 import "../styles/Modal.css";
 import api from "../api/api";
+import { localStorageRemoveJWT } from "../utils/localStorage";
 
 /**
  * Modal class representing LogIn Popup
@@ -138,7 +139,13 @@ export default function Modal(props) {
                         <h2>Log out</h2>
                         <img className="modal-picture-user" src="dog_square_big.jpg"/>
                         <div className="div-margin">
-                            <button id="button-login" className="form-button">Log out</button>
+                            <button 
+                                id="button-login" 
+                                className="form-button"
+                                onClick={() => {
+                                    props.setIsUserLoggedIn(false)
+                                    localStorageRemoveJWT()
+                                }}>Log out</button>
                             <button
                                 id="change-password" 
                                 onClick={() => {

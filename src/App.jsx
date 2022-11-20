@@ -9,6 +9,7 @@ import ModalEvent from './components/ModalEvent'
 import ModalEventContent from './components/ModalEventContent'
 import ModalSort from './components/ModalSort'
 import api from './api/api'
+import { isJWTValid } from './utils/localStorage'
 
 export default function App() {
     const [modal, setModal] = React.useState(false);
@@ -18,7 +19,7 @@ export default function App() {
     const [currentMonth, setCurrentMonth] = React.useState(getMonth(globals.currentMonthIndex - 1))
     const [eventArray, setEventArray] = React.useState(calculateEventTable(globals.events))
     const [isAboutActive, setAboutActive] = React.useState(false)
-    const [isUserLoggedIn, setIsUserLoggedIn] = React.useState(false)
+    const [isUserLoggedIn, setIsUserLoggedIn] = React.useState(isJWTValid())
     const [users, setUsers] = React.useState([])
     const [events, setEvents] = React.useState([])
     const [types, setTypes] = React.useState([])
