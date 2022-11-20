@@ -40,6 +40,7 @@ export default function App() {
 
     React.useEffect( () => {
         async function getData() {
+            await new Promise(r => setTimeout(r, 500)) // 500ms timeout workaround for traffic time in network
             const data = {
                 month: checkMonthIndex(globals.currentMonthIndex),
                 year: globals.currentYear
@@ -52,6 +53,7 @@ export default function App() {
 
     React.useEffect( () => {
         async function getData() {
+            await new Promise(r => setTimeout(r, 500)) // 500ms timeout workaround for traffic time in network
             const res = await api.getTypes()
             globals.filters = res.map( item => {
                 return {
@@ -65,6 +67,7 @@ export default function App() {
 
     React.useEffect( () => {
         async function getData() {
+            await new Promise(r => setTimeout(r, 500)) // 500ms timeout workaround for traffic time in network
             const res = await api.getTypes()
             try {
                 resolveFilters(res)
