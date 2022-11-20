@@ -5,7 +5,8 @@ class Api {
     constructor() {
         this.IS_LOGGING_ACTIVE = false
         this.backend = axios.create({
-            baseURL: `http://localhost:3000`,
+            // baseURL: `http://localhost:3000`,
+            baseURL: `https://eventdiarybackend.azurewebsites.net`,
             headers: {
                 "Content-Type": "application/json",
                 "Access-Control-Allow-Origin": '*'
