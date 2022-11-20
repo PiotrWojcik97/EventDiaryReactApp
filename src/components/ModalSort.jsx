@@ -12,7 +12,7 @@ export default function ModalSort(props) {
             key={idx}
             color={item.color}
             _id={item.id}
-            handleClick={ undefined }
+            handleClick={ HandleColorClick }
             isClicked={ false }
             />
     })
@@ -34,6 +34,16 @@ export default function ModalSort(props) {
             <span>{item.name}</span>
         </div>
     })
+
+    function HandleColorClick(id) {
+        const newCheckBoxesArray = structuredClone(checkboxes)
+        for(let i=0; i<globals.filters.length; i++) {
+            if(globals.filters[i].type_id == id) {
+                newCheckBoxesArray[i] ? newCheckBoxesArray[i] = false : newCheckBoxesArray[i] = true
+            }
+        }
+        setCheckboxes(newCheckBoxesArray)
+    }
 
     function handleChange(event) {
         const {name, checked} = event.target

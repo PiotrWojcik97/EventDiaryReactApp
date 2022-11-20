@@ -112,7 +112,7 @@ export default function App() {
                 if(event_types[j].id == globals.filters[i].type_id ) {
                     isEventTypeFound = true
                 }
-            }
+            }                                                                                                                                 
             if(!isEventTypeFound) {
                 globals.filters.splice(i, 1)
             }
