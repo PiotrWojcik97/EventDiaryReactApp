@@ -80,6 +80,8 @@ export default function MainContent(props) {
                         &nbsp;&nbsp;&nbsp;&nbsp;✔️ Event_types Filters<br />
                         &nbsp;&nbsp;&nbsp;&nbsp;✔️ Logging system<br />
                         &nbsp;&nbsp;&nbsp;&nbsp;✔️ Data validation<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;✔️ Hiding controllers while printing<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;✔️ Good app width and height scaling (except modals)<br />
                         &nbsp;&nbsp;&nbsp;&nbsp;✔️ Monthly visualization<br />
                         &nbsp;&nbsp;&nbsp;&nbsp;✔️ Local storage for JWT<br />
                         &nbsp;&nbsp;&nbsp;&nbsp;✔️ JWT validation at app open<br />
