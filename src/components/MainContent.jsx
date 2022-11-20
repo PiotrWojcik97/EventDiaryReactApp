@@ -40,68 +40,59 @@ export default function MainContent(props) {
                     <span>-</span>
                     <a href="https://github.com/PiotrWojcik97/EventDiaryPHPBackend">PHP</a><br />
                     <h2 className="title">Project Requirements</h2>
+                    <h4 className="title">Technical Requirements</h4>
                     <span>
-                        Specyfikacja funkcjonalna aplikacji:
-                        1. Zdarzenie rozumiemy jako punkt na osi czasu charakteryzujący się następującymi cechami:
-                        1. nazwa zdarzenia,
-                        2. data zaistnienia zdarzenia (dzień, miesiąc, rok),
-                        3. krótki opis tekstowy,
-                        4. szczegółowy opis tekstowy,
-                        5. ilustracja graficzna,
-                        6. typ zdarzenia / procesu.
-                        2. Procesy rozumiemy jako odcinki na osi czasu charakteryzujące się tymi samymi cechami,
-                        co zdarzenia, ale z tą różnicą, że określona jest data rozpoczęcia i data zakończenia procesu.
-                        3. Typy pozwalają powiązać ze sobą podobne wydarzenia i np. wyświetlić je w sposób
-                        charakterystyczny. Typ powinien mieć edytowalną nazwę oraz konfigurowalną jakąś cechę
-                        graficzną (np. kolor lub/i ikonę).
-                        4. Są dwie grupy użytkowników: czytelnicy (niezalogowani) i administratorzy (zalogowany).
-                        5. Użytkownicy niezalogowani mogą swobodnie przeglądać zawartość pamiętnika, ale bez
-                        możliwości edycji wpisów.
-                        6. Administratorzy mogą zarówno przeglądać zawartość jak i ją edytować (operacje CRUD na
-                        zdarzeniach, procesach i typach).
-                        7. Każdy użytkownik może wydrukować pełną zawartość pamiętnika w czytelny sposób.
-                        Drukowanie powinno być zrealizowane przez odpowiednio przygotowany za pomocą CSS
-                        widok pozbawiony kontrolek sterujących aplikacji.
-                        8. Zadbać o właściwe przechowywanie hasła dostępowego i możliwość jego zmiany przez
-                        zalogowanego użytkownika. Mechanizm samodzielnej rejestracji nowych użytkowników
-                        nie jest wymagany.
-                        9. Zadbać o estetyczną formę prezentacji pamiętnika. Można skorzystać z bibliotek JS, które
-                        ułatwiają oznaczanie zdarzeń na osi czasu, można spróbować samodzielnej implementacji z
-                        użyciem odpowiednio przygotowanego arkusza CSS i elementów języka HTML5.
-                        10. Kliknięcie w dane zdarzenie / proces na osi czasu powinno wyświetlać pełen opis danego
-                        elementu.
-                        
-                        Wymagania techniczne:
-                        • proszę wykorzystać technologie PHP, MariaDB / MySQL, HTML, JavaScript, CSS we
-                        współczesnych wersjach (w miarę możliwości),
-                        • zaprojektować relacyjną bazę danych adekwatną do postawionego problemu: dobrać
-                        odpowiednie typy pól, zaplanować zależności pomiędzy tabelami, zastosować klucze obce,
-                        • zachęcam do korzystania z frameworków, ale nie ma takiego wymogu; tym samym np.
-                        mechanizm uwierzytelniania użytkownika może zostać stworzony samodzielnie (można
-                        wykorzystywać materiały dołączone do kursu); użycie frameworka upraszcza pewne
-                        kwestie implementacyjne, ale wymaga zrozumienia i poznania samego frameworka – wybór
-                        leży w gestii Studenta,
-                        • aplikacja powinna zapewniać choćby w minimalnym stopniu bezpieczeństwo przed
-                        włamaniami:
-                        ◦ zastosować zabezpieczenie przed SQL-Injection,
-                        ◦ hasła użytkowników muszą być przechowywane w bazie w formie hashy.
-                        Stronę należy umieścić na dowolnym publicznie dostępnym serwerze w sieci Internet.
-
-
-                        Rozwiązanie należy załadować na platformę OKNO w wyznaczonym terminie i powinno ono
-                        zawierać:
-                        • kody źródłowe zaimplementowanego systemu (wraz z kodami ewentualnych bibliotek
-                        zewnętrznych),
-                        • skrypty tworzące bazę danych zawierającą tabele z przykładową zawartością pozwalającą na
-                        zapoznanie się z funkcjonalnością aplikacji,
-                        • dokumentację projektu składającą się z:
-                        ◦ opisu konfiguracji serwera i uruchomienia witryny (w tym działające dane logowania),
-                        ◦ adresu URL serwera, na którym umieszczono stronę,
-                        ◦ opis wybranej struktury bazy danych (znaczenie poszczególnych tabel, ich pól, relacji
-                        itp.),
-                        ◦ opisu kodu stworzonej aplikacji (krótka informacja wskazująca, za co odpowiadają
-                        kluczowe funkcje/pliki/klasy),
-                        ◦ przykładowe zrzuty ekranu.
+                        ✔️ PHP 8.1 <br />
+                        ✔️ React JS (Node 18.x)<br />
+                        ✔️ My SQL/MariaDB<br />
+                        ✔️ HTML 5<br />
+                        ✔️ CSS 3<br />
+                    </span>
+                    <h4 className="title">Project specific</h4>
+                    <span>
+                        ✔️ REST API<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;✔️ GET, POST, DELETE Methods<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;✔️ 200, 400, 401 Statues<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;✔️ API Authentication with JWT<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;❌ No pure REST API Style (PHP Rest API style: url endings present with .php Solution: adding nginx with configuration)<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;❌ No image transfer between front and back end<br />
+                        ✔️ PHP<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;✔️ MySQL database connection<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;✔️ SQL Injection protected (PDO Statements)<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;✔️ API Swagger documentation<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;✔️ Password Hashing (Methods: password_hash, password_verify) <br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;✔️ Scripts to create database with example data<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;✔️ Able to retrieve stored image in database<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;✔️ JWT authentication implementation (lasting for one day)<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;❌ REST API data validation (Done in front end, however should be done also in backend)<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;❌ Project configuration .yaml file (e.g. containing database address)<br />
+                        ✔️ SQL<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;✔️ Relational database<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;✔️ Storing also images<br />
+                        ✔️ React<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;✔️ Processes and events visualization (events have the same start_time nad end_time)<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;✔️ Events CRUD operations<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;✔️ Event_types CRUD operations<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;✔️ Event_types visualization by colors<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;✔️ Multi month/year handling<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;✔️ Event_types Filters<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;✔️ Logging system<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;✔️ Data validation<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;✔️ Monthly visualization<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;✔️ Local storage for JWT<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;✔️ JWT validation at app open<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;❌ JWT expiration date hardcoded in frontend<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;❌ Project configuration .yaml file (e.g. containing back end address)<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;❌ No positive confirmation after successful action (e.g. after event creation)<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;❌ No dynamic Users (Users are hardcoded)<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;❌ Huge project refractor needed (doubled functions, renaming components for better readability, getting rid of globals etc. )<br />
+                    </span>
+                    <h4 className="title">Known issues</h4>
+                    <span>
+                        React: no checking if JWT expired during application working <br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;Solution: implement checking HTTP 401 status, if present, popup waring and user login modal. <br /><br />
+                        React and PHP: Multi-month processes during update have wrong default time values. <br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;Solution: implement another field in REST API called: default_start_time, default_end_time. Do back end logic to retrieve that information, send it to front end. In front end implement use case in event update modal.
                     </span>
                     </div>
                 :
