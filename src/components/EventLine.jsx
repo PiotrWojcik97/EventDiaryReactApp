@@ -2,6 +2,10 @@ import React from 'react'
 import Event from './Event';
 import "../styles/Event.css";
 
+
+/**
+ * One Event Line per user, which are holding events
+ */
 export default function EventLine(props) {
   function isEventPresent() {
     if(props.eventArray && props.eventArray.length > 0)

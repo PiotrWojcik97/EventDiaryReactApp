@@ -1,5 +1,9 @@
 import React from 'react'
 
+
+/**
+ * Clickable users in update/create modal 
+ */
 export default function UserBubble(props) {
     return (
         <img

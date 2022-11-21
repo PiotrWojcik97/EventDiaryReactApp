@@ -11,6 +11,10 @@ import ModalSort from './components/ModalSort'
 import api from './api/api'
 import { isJWTValid } from './utils/localStorage'
 
+
+/**
+ * Main application logic
+ */
 export default function App() {
     const [modal, setModal] = React.useState(false);
     const [modalEvent, setModalEvent] = React.useState(false);

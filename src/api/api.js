@@ -1,6 +1,10 @@
 import axios from "axios";
 import globals from "../utils/globals";
 import { localStorageGetJWT, localStorageWriteJWT } from "../utils/localStorage";
+
+/**
+ * Handles REST API calls
+ */
 class Api {
     constructor() {
         this.IS_LOGGING_ACTIVE = false

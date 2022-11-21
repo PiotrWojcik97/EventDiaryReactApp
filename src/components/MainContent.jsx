@@ -1,6 +1,10 @@
 import React from "react"
 import Month from "./Month"
 
+
+/**
+ * Main content used to show concent of calendar or about section
+ */
 export default function MainContent(props) {
     return (
         <main>

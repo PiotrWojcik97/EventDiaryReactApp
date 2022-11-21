@@ -3,6 +3,10 @@ import "../styles/Event.css";
 import { allowedColors } from '../utils/utils';
 import globals from '../utils/globals';
 
+
+/**
+ * Color event div in a calendar day.
+ */
 export default function Event(props) {
     const color = getColor()
     const isNotFiltered = getFilters() 

@@ -1,6 +1,10 @@
 import '../styles/Print.css'
 import '../styles/Navbar.css'
 
+
+/**
+ * Holds Navabar with navigation buttons
+ */
 export default function Navbar(props) {
 
     return (

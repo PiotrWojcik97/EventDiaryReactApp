@@ -7,6 +7,10 @@ import globals from "../utils/globals";
 import api from "../api/api";
 import dayjs from "dayjs";
 
+
+/**
+ * Modal class representing Event content, updating event, updating event_type
+ */
 export default function ModalEventContent(props) {
     const [modalData, setModelData] = React.useState(getModalContent(props.eventID))
     const [isUpdateClicked, setIsUpdateClicked] = React.useState(false)

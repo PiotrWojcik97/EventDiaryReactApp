@@ -1,3 +1,6 @@
+/**
+ * Holds local storage operations
+ */
 export function localStorageWriteJWT(token) {
     localStorage.setItem('JWT', JSON.stringify({
         token: token,

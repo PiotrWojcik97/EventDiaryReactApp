@@ -8,14 +8,7 @@ import globals from "../utils/globals";
 import { checkMonthIndex } from "../utils/utils";
 
 /**
- * What should be done better in project: (it has not been done so far due to lack of time)
- *  - refactor from Month to Calendar name (Calendar name is better)
- *  - generate users dynamically and adjust content to them instead of statically (those face bubble on the left)
- *  - divide content for more readable components instead of so many items put inside one component
- *  - resolve weird scaling on a smaller screen (appearing bar on the bottom)
- *  - 4 lines indent everywhere instead of 2 in some files
- *  - tests
- *  - better documentation
+ * Month Component holding days, left side users, buttons of filter, create event.
  */
 export default function Month(props) {
   const lt = "<"
@@ -88,3 +81,24 @@ export default function Month(props) {
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * What should be done better in project: (it has not been done so far due to lack of time)
+ *  - refactor from Month to Calendar name (Calendar name is better)
+ *  - generate users dynamically and adjust content to them instead of statically (those face bubble on the left)
+ *  - divide content for more readable components instead of so many items put inside one component
+ *  - resolve weird scaling on a smaller screen (appearing bar on the bottom)
+ *  - 4 lines indent everywhere instead of 2 in some files
+ *  - tests
+ *  - better documentation
+ */

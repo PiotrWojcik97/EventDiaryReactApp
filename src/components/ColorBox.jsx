@@ -1,6 +1,10 @@
 import React from 'react'
 import "../styles/Modal.css";
 
+
+/**
+ * ColorBox holds representation of event-type color. Used while choosing on update/create event
+ */
 export default function ColorBox(props) {
     
     return (

@@ -11,9 +11,6 @@ import dayjs from "dayjs";
  * @param {toggleModal} props 
  * @returns Modal
  */
-
-// TODO: should be better name e.g. ModalEventAdding
-// TODO: create one parent Modal and ModalContent instead of 3 modalsX
 export default function ModalEvent(props) {
     const [formData, setFormData] = React.useState({
         startDate: null,
@@ -446,3 +443,8 @@ export default function ModalEvent(props) {
         </div>
     )
 }
+
+
+
+// TODO: should be better name e.g. ModalEventAdding
+// TODO: create one parent Modal and ModalContent instead of 3 modalsX

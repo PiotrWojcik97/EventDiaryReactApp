@@ -4,6 +4,10 @@ import "../styles/Day.css";
 import globals from '../utils/globals';
 import { checkMonthIndex } from '../utils/utils';
 
+
+/**
+ * Instance of a Day in calendar. Holding EventLines inside that are holding events.
+ */
 export default function Day(props) {
     const NUMBER_OF_USERS = 3
     

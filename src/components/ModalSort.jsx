@@ -3,6 +3,10 @@ import globals from "../utils/globals";
 import ColorBox from "./ColorBox";
 import "../styles/Modal.css";
 
+
+/**
+ * Modal class representing modal with filters
+ */
 export default function ModalSort(props) {
 
     const [ checkboxes, setCheckboxes] = React.useState(globals.filters.map(item => item.isNotFiltered))

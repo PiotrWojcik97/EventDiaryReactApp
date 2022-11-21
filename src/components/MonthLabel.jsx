@@ -1,6 +1,10 @@
 import React from 'react'
 import "../styles/MonthLabel.css";
 
+
+/**
+ * Holds Label of current month
+ */
 export default function MonthLabel(props) {
   return (
     <>

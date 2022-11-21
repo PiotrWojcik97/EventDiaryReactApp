@@ -1,3 +1,7 @@
+/**
+ * Holds common function used in a project
+ */
+
 import dayjs from 'dayjs'
 
 export function getMonth(month = dayjs().month() ){
