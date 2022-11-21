@@ -299,6 +299,16 @@ export default function ModalEventContent(props) {
         return false
     }
 
+    function getTypeName() {
+        for(let i=0; i<globals.event_types.length; i++) {
+            if(globals.event_types[i].id == formData.eventType){
+                console.log(globals.event_types[i].name)
+                return globals.event_types[i].name
+            }
+        }
+        return ""
+    }
+
     function handleSubmit(event) {
         event.preventDefault()
         if(_validateForm()){
@@ -495,10 +505,15 @@ export default function ModalEventContent(props) {
                     <div className="picture-description-holder">
                         <img className="modal-picture" src={smallImagesArray[modalData.user_id - 3]}/>
                         <div>
-                            <h3>{modalData.name}</h3>
-                            <span>{modalData.short_description}</span>
+                            <h3 className="margin-5px">{modalData.name}</h3>
+                            <span className="font-hang">{getTypeName()}</span><br />
+                            <span className="time-font-size">
+                                Start: {modalData.start_time}<br />
+                                End:&nbsp;&nbsp; {modalData.end_time}<br />
+                            </span>
                         </div>
                     </div>
+                    <span>{modalData.short_description}</span><br /><br />
                     <span>{modalData.long_description}</span>
                     {props.isUserLoggedIn && <div className="modal-buttons">
                         <button onClick={deleteEvent}>Delete</button>

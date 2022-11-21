@@ -336,3 +336,20 @@ textarea {
     padding: 5px;
     font-family: 'Inter', sans-serif;
 }
+
+.time-font-size {
+    font-size: 0.9rem;
+    letter-spacing: -0.04rem;
+}
+
+.margin-5px {
+    margin-bottom: 4px;
+    margin-top: 10px;
+}
+
+.font-hang {
+    font-style: italic;
+    color: black;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
