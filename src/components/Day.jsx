@@ -17,6 +17,13 @@ export default function Day(props) {
         }
     }
     
+    function isNotSorted() {
+        const currentDayNumber = Number(props.day.format('DD'))
+        if( currentDayNumber < globals.sort.start || currentDayNumber > globals.sort.end)
+            return false
+        return true
+    }
+
     const eventLines = new Array(NUMBER_OF_USERS).fill().map(
         (_, idx) => <EventLine
                         key={idx}
@@ -25,7 +32,7 @@ export default function Day(props) {
                         toggleModalEventContent={props.toggleModalEventContent}
                     />
     )
-
+    console.log()
     return (
         <div className='tile-div'>
             <span>
@@ -37,7 +44,7 @@ export default function Day(props) {
                 <></>
             }</span>
             <div>
-                {eventLines}
+                { isNotSorted() && eventLines }
             </div>
         </div>
     )

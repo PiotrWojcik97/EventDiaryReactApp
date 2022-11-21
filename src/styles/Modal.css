@@ -162,6 +162,15 @@ textarea {
     margin-bottom: 5px;
 }
 
+#warning-h4-sort {
+    color: red;
+    height: 45px;
+    width: 290px;
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
 .colorBox {
     width: 30px;
     height: 30px;
@@ -268,7 +277,7 @@ textarea {
 
 #sort-modal > div {
     margin-top: 45px;
-    margin-bottom: 50px;
+    margin-bottom: 160px;
     margin-left: 5px;
 }
 
@@ -304,4 +313,26 @@ textarea {
     position: absolute;
     top: 0px;
     left: calc(50% - 50px);
+}
+
+.div-number-input {
+    position: absolute;
+    bottom: -90px;
+    /* background-color: red; */
+    
+}
+
+.h4-filter {
+    margin: 0px;
+    padding-bottom: 4px;
+}
+
+.input-number {
+    width: 40px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 4px;
+    border: 1px solid gray;
+    padding: 5px;
+    font-family: 'Inter', sans-serif;
 }

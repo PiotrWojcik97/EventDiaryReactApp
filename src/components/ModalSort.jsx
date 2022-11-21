@@ -10,6 +10,9 @@ import "../styles/Modal.css";
 export default function ModalSort(props) {
 
     const [ checkboxes, setCheckboxes] = React.useState(globals.filters.map(item => item.isNotFiltered))
+    const [ formNumbers, setFormNumbers] = React.useState(globals.sort)
+    const [errorMessage, setErrorMessage] = React.useState("")
+
 
     const colorBoxes = globals.event_types.map(( item, idx) => {
         return <ColorBox
@@ -56,18 +59,40 @@ export default function ModalSort(props) {
         setCheckboxes(newCheckBoxesArray)
     }
 
+    function handleNumberChange(event) {
+        const {name, value} = event.target
+        setFormNumbers(prevFormData => ({
+            ...prevFormData,
+            [name]: value
+        }))
+    }
+
+    function checkDaysNumberCorrection() {
+        if(formNumbers.start <= formNumbers.end)
+            return true
+        return false
+    }
+
     function handleSubmit(event) {
         event.preventDefault()
-        const filterArray = globals.event_types.map(( item, idx) => {
-            return {
-                type_id: item.id,
-                isNotFiltered: checkboxes[idx]
-            }
-        })
-
-        globals.filters = filterArray
-        props.toggleModal()
-        props.notifyEventUpdate()
+        if(checkDaysNumberCorrection()) {
+            const filterArray = globals.event_types.map(( item, idx) => {
+                return {
+                    type_id: item.id,
+                    isNotFiltered: checkboxes[idx]
+                }
+            })
+    
+            globals.filters = filterArray
+            globals.sort = formNumbers
+            
+            setErrorMessage("")
+            props.toggleModal()
+            props.notifyEventUpdate()
+        }
+        else {
+            setErrorMessage("Start day must be less or equal ending day")
+        }
     }
 
     function clearFilter(event) {
@@ -91,6 +116,32 @@ export default function ModalSort(props) {
                 </div>
                 <div>
                     {names}
+                </div>
+                <div className="div-number-input">
+                    <h4 className="h4-filter">Show days:</h4>
+                    <div>
+                        <span>From</span>
+                        <input
+                            className="input-number"
+                            type="number" 
+                            name="start"
+                            min="1" 
+                            max="31"
+                            value={formNumbers.start}
+                            onChange={handleNumberChange}
+                        />
+                        <span>To</span>
+                        <input
+                            className="input-number"
+                            type="number" 
+                            name="end"
+                            min="1" 
+                            max="31"
+                            value={formNumbers.end}
+                            onChange={handleNumberChange}
+                        />
+                    </div>
+                    <h4 id="warning-h4-sort">{errorMessage}</h4>
                 </div>
                 <button type="button" className="close-modal" onClick={props.toggleModal}>X</button>
                 <button type="button" className="clear-button" onClick={clearFilter}>Clear Filter</button>

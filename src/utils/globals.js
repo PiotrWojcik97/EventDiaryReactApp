@@ -11,5 +11,6 @@ const globals = {
   events: [],
   event_types: [],
   filters: undefined,
+  sort: {start: 1, end: 31},
 };
 export default globals;
